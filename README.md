@@ -1,4 +1,8 @@
-StrongLifts-style 5x5 workout app built with Next.js, Clerk auth, and Supabase persistence.
+Linear-progression barbell tracker built with Next.js, Clerk auth, and Supabase persistence.
+
+The interface implements the design in `design_handoff_git_swole/` — a near-black,
+hairline-and-Anton visual language across six screens, built around a session
+screen that shows one set at a time.
 
 ## Getting Started
 
@@ -76,24 +80,31 @@ If the app moves to a new owner, these are the pieces to transfer:
 
 ## Implemented Features
 
-- Workout A/B alternation with automatic next workout selection
-- 5x5 logic + deadlift 1x5 support
-- Set-by-set workout session flow with rest timer (auto-start on set complete)
-- Progression: +5 by default (+10 deadlift), fail holds, deload after 3 failed attempts
-- Workout history with detail view, set editing, and delete
-- PR tracking (max weight, best volume, best set)
-- Progress charts for weight and volume
-- Settings: units, increment, rest duration, barbell weight, editable A/B exercise slots
-- Plate calculator and warmup generator in workout screen
-- Notes per workout
+- Three-day program rotating A → B → A → C, editable per day
+- Exercise modes: BB progresses by its own step, BW / TIME / DIST are logged only
+- One-set-at-a-time session screen: warm-up ramp, plate maths, loaded-bar diagram,
+  reps stepper, one log button, and the whole session queued underneath
+- Warm-up ramp of three sets (bar / 50% / 75%), excluded from volume and progression
+- Rest timer that starts itself and picks its length from the result — short after
+  a hit, long after a miss — skippable and extendable by 30 s
+- Any pending set cell is tappable to log out of order; warm-up cells toggle
+- In-progress sessions resume after leaving the screen
+- Progression: per-exercise step, fail holds, deload after 3 failed attempts
+- Log of past sessions with per-set rep cells
+- Progress charts with 3M / 6M / 1Y / 2Y / 5Y ranges, plus best set, best volume,
+  estimated 1RM and session count
+- Plate inventory: pair counts per plate, and plate maths bounded by what you own
+- StrongLifts CSV import
 
 ## App Routes
 
-- `/` dashboard / next workout
-- `/workout` training session screen
-- `/history` workout history
-- `/progress` progress graphs + PRs
-- `/settings` customization + exercise database
+- `/` Today — week strip, planned lifts, start the session
+- `/workout` Session — one set at a time
+- `/history` Log — past sessions
+- `/progress` Progress — charts, ranges, PRs
+- `/program` Program — inline-editable days
+- `/settings` Settings — preferences, plate inventory, exercises & data
+- `/import` StrongLifts CSV import
 
 ## Notes
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics=""><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"><style>body{margin:0;background:#08090A;font-family:'IBM Plex Mono',ui-monospace,monospace}a{color:#45BB7C}a:hover{color:#6FD3A0}*{box-sizing:border-box}</style></helmet>
+<div style="display:flex;flex-direction:column;gap:60px;padding:48px;color:#EDEDE7">
+
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px">
+<span style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.18em;color:#45BB7C">DESKTOP · 1440</span>
+<span style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.06em;color:#7C8A91">RAIL → CONTENT COLUMN · SIX SCREENS · ONE SET AT A TIME</span>
+</div>
+<x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="{{ 1440 }}" height="{{ 900 }}" url="gitswole.app/today" hint-size="1440px,900px">
+
+<dc-import name="GSDesk" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></x-import>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px">
+<span style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.18em;color:#45BB7C">IPAD · LANDSCAPE</span>
+<span style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.06em;color:#7C8A91">SAME TWO PANES, NARROWER CONTENT COLUMN</span>
+</div>
+<div style="width:1274px;padding:36px 40px;border:2px solid #23292D;border-radius:38px;background:#0A0C0D;box-shadow:0 0 0 8px #101315">
+<div style="width:1194px;height:834px;overflow:hidden;background:#0B0E10">
+<dc-import name="GSDesk" style="width:100%;height:100%" hint-size="100%,100%"></dc-import>
+</div>
+</div>
+</div>
+
+<div style="max-width:820px;display:flex;flex-direction:column;gap:14px">
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">WHAT THE BIG SCREEN ADDS</div>
+<div style="font:400 11.5px/1.75 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8;text-wrap:pretty">The rail keeps all six screens one click away, and a selector strip under the header switches between whatever the screen is a list of — exercises, sessions, lifts, program days. Nothing is behind a back button.</div>
+<div style="font:400 11.5px/1.75 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8;text-wrap:pretty">The session screen is one set at a time: the current set at arm's-length size with plate math and a loaded-bar diagram, a stepper for reps, and one button to log it. Rest replaces that block and the queue stays put.</div>
+<div style="font:400 11.5px/1.75 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8;text-wrap:pretty">Under it the whole session sits in one table: one row per exercise, warm-up and working sets as columns. Logging walks the ramp then the working sets in order, across exercises, and any cell can be clicked out of order.</div>
+<div style="font:400 11.5px/1.75 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8;text-wrap:pretty">The program editor is the payoff for a keyboard. Every field is an input, mode tags cycle on click, rows delete inline.</div>
+</div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -9,6 +9,8 @@ export type WorkoutType = string;
 export type WeightUnit = "lb" | "kg";
 export type WorkoutSummary = "up" | "down";
 export type ExerciseOwnership = "global" | "user";
+/** BB progresses by `inc`; BW/TIME/DIST are logged but never progressed. */
+export type ExerciseMode = "BB" | "BW" | "TIME" | "DIST";
 
 export type ExerciseDefinition = {
   key: ExerciseKey;
@@ -39,6 +41,9 @@ export type ProgramExercise = {
   exerciseId: string;
   sets: number;
   reps: number;
+  /** Weight added after a clean session. Applies to BB items only. */
+  inc: number;
+  mode: ExerciseMode;
 };
 
 export type WorkoutTemplate = {
@@ -68,6 +73,8 @@ export type WorkoutLog = {
   id: string;
   userId: string;
   date: string;
+  /** Wall-clock length of the session. Absent on imported or pre-existing logs. */
+  durationSeconds?: number;
   workoutType: WorkoutType;
   workoutNote?: string;
   workoutSummary?: WorkoutSummary;
@@ -83,7 +90,10 @@ export type ProgressionState = {
 export type AppSettings = {
   units: WeightUnit;
   weightIncrement: 2.5 | 5 | 10;
-  restTimerSeconds: number;
+  /** Rest length after a set that hit its target reps. */
+  restAfterHit: number;
+  /** Rest length after a set that came up short — longer on purpose. */
+  restAfterMiss: number;
   barbellWeight: number;
   plateInventory: PlateInventoryItem[];
   workoutGroups: WorkoutTemplate[];

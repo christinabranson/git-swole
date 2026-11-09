@@ -15,7 +15,19 @@ export const DEFAULT_PROGRESSION: ProgressionState = {
   failStreaks: { ...INITIAL_FAIL_STREAKS },
 };
 
-function getIncrement(exerciseKey: ExerciseKey, baseIncrement: number) {
+/**
+ * The program row's own `inc` wins when the caller supplies one. Without it we fall
+ * back to the old global-increment behaviour (deadlift moves in double steps).
+ */
+function getIncrement(
+  exerciseKey: ExerciseKey,
+  baseIncrement: number,
+  incByExerciseId?: Record<string, number>,
+) {
+  const programIncrement = incByExerciseId?.[exerciseKey];
+  if (programIncrement !== undefined && Number.isFinite(programIncrement)) {
+    return programIncrement;
+  }
   return exerciseKey === "deadlift" ? baseIncrement * 2 : baseIncrement;
 }
 
@@ -37,6 +49,7 @@ export function applyWorkoutProgression(
   exerciseLogs: WorkoutExerciseLog[],
   baseIncrement: number,
   nextWorkoutTypeOverride?: string,
+  incByExerciseId?: Record<string, number>,
 ): ProgressionState {
   const nextWeights = { ...previous.currentWeights };
   const nextFailStreaks = { ...previous.failStreaks };
@@ -49,7 +62,7 @@ export function applyWorkoutProgression(
     const key = exerciseLog.exerciseKey;
 
     if (succeeded) {
-      const increment = getIncrement(key, baseIncrement);
+      const increment = getIncrement(key, baseIncrement, incByExerciseId);
       const basedOnPerformedWeight = exerciseLog.weight + increment;
       nextWeights[key] = Number((Math.max(nextWeights[key] + increment, basedOnPerformedWeight)).toFixed(2));
       nextFailStreaks[key] = 0;

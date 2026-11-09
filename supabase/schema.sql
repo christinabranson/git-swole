@@ -73,6 +73,10 @@ alter table public.users
   add column if not exists workout_groups jsonb not null default '[]'::jsonb;
 alter table public.users
   add column if not exists plate_inventory jsonb not null default '[]'::jsonb;
+alter table public.users
+  add column if not exists rest_after_miss_seconds integer not null default 300;
+alter table public.workouts
+  add column if not exists duration_seconds integer;
 
 update public.users
 set

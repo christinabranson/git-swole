@@ -38,25 +38,24 @@ export default function ImportPage() {
   };
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Import Workout History</h1>
+    <div className="px-[22px] py-5 desk:px-[26px]">
+      <h1 className="num mb-6 text-[56px] uppercase leading-[0.9] desk:text-[64px]">Import</h1>
 
-      <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-        <div className="text-sm text-[#9ab0bd]">How your CSV should look</div>
-        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[#d7e4eb]">
-          <li>Header row must include: Date (yyyy/mm/dd), Workout Name, Exercise, SetsxReps, Set 1..5 columns.</li>
-          <li>Known exercises map to the global catalog.</li>
-          <li>Unknown exercise names are imported as user-defined exercises when signed in.</li>
-          <li>Date format expected: yyyy/mm/dd (as exported by StrongLifts CSV).</li>
+      <div className="border-b border-line py-5">
+        <div className="label text-[9px] text-dim">How your CSV should look</div>
+        <ul className="label mt-3 space-y-2 text-[9.5px] font-normal leading-[1.7] text-ink-2">
+          <li>Header row must include Date (yyyy/mm/dd), Workout Name, Exercise, SetsxReps, Set 1–5.</li>
+          <li>Known exercise names map to the global catalog.</li>
+          <li>Unknown names are imported as user-defined exercises when signed in.</li>
         </ul>
       </div>
 
-      <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-        <label className="block text-sm text-[#9ab0bd]">Upload CSV file</label>
+      <div className="border-b border-line py-5">
+        <label className="label block text-[9px] text-dim">Upload CSV file</label>
         <input
           type="file"
           accept=".csv,text/csv"
-          className="mt-2 block w-full text-sm"
+          className="label mt-3 block w-full border-none px-0 text-[9.5px] font-normal text-ink-2"
           onChange={(event) => {
             const file = event.target.files?.[0];
             if (!file) return;
@@ -65,10 +64,10 @@ export default function ImportPage() {
         />
       </div>
 
-      <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-        <label className="block text-sm text-[#9ab0bd]">CSV Preview / Paste</label>
+      <div className="py-5">
+        <label className="label block text-[9px] text-dim">Paste CSV</label>
         <textarea
-          className="mt-2 min-h-56 w-full rounded border border-[#334753] bg-[#2b3a43] px-3 py-2 text-sm"
+          className="mt-3 min-h-56 w-full border border-line px-3 py-3 text-[11px] leading-[1.6] text-ink"
           placeholder="Paste CSV contents here, or upload above."
           value={csvText}
           onChange={(event) => setCsvText(event.target.value)}
@@ -76,23 +75,21 @@ export default function ImportPage() {
         <button
           type="button"
           disabled={!csvText.trim() || isImporting}
-          className="mt-3 rounded-lg bg-[#45bb7c] px-4 py-2 text-sm font-medium text-[#112019] disabled:bg-[#334753] disabled:text-[#8ca5b3]"
+          className="label mt-4 h-[58px] w-full bg-green px-6 text-[13px] text-bg disabled:bg-panel disabled:text-off desk:w-[320px]"
           onClick={() => void runImport()}
         >
-          {isImporting ? "Importing..." : "Import Workouts"}
+          {isImporting ? "Importing" : "Import workouts"}
         </button>
       </div>
 
       {resultMessage ? (
-        <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4 text-sm text-[#d7e4eb]">
-          {resultMessage}
-        </div>
+        <div className="label border-t border-line py-5 text-[9.5px] font-normal text-green">{resultMessage}</div>
       ) : null}
 
       {issues.length > 0 ? (
-        <div className="rounded-xl border border-amber-600/40 bg-[#2b3a43] p-4">
-          <div className="text-sm font-medium text-amber-300">Import issues</div>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-amber-200">
+        <div className="border-t border-amber-line py-5">
+          <div className="label text-[9px] text-amber">Import issues</div>
+          <ul className="label mt-3 space-y-2 text-[9.5px] font-normal leading-[1.7] text-amber">
             {issues.map((issue) => (
               <li key={issue}>{issue}</li>
             ))}

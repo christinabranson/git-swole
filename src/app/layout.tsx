@@ -1,19 +1,27 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Anton, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/providers";
-import { AppNav } from "@/components/app-nav";
-import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"],
+// Numbers are Anton, words are Plex Mono. See the handoff type scale.
+const anton = Anton({
+  variable: "--font-anton",
+  weight: "400",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Git Swole",
-  description: "StrongLifts-style 5x5 workout app",
+  description: "Linear-progression barbell tracker",
   icons: {
     icon: "/gitswole.png",
     apple: "/gitswole.png",
@@ -27,35 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>
+      <body className={`${anton.variable} ${plexMono.variable}`}>
         <Providers>
-          <div className="flex min-h-screen flex-col">
-            <AppNav />
-            <main className="mx-auto w-full max-w-6xl flex-1 p-4">{children}</main>
-            <footer className="border-t border-[#334753] bg-[#24323a]">
-              <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm text-[#c7d7e0]">
-                <span>Built by Christina Branson</span>
-                <div className="flex items-center gap-3">
-                  <Link
-                    href="https://github.com/christinabranson"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#45bb7c] hover:underline"
-                  >
-                    GitHub
-                  </Link>
-                  <Link
-                    href="https://github.com/christinabranson/git-swole"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#45bb7c] hover:underline"
-                  >
-                    Repo
-                  </Link>
-                </div>
-              </div>
-            </footer>
-          </div>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

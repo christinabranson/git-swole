@@ -10,24 +10,28 @@ import {
 import { getSupabaseClient } from "@/lib/supabase";
 import { EXERCISE_BY_KEY } from "@/lib/program";
 import { DEFAULT_WORKOUT_GROUPS } from "@/lib/program";
+import { DEFAULT_PLATE_INVENTORY } from "@/lib/plates";
 
-export const LOCAL_STATE_KEY = "git-swole-state-v1";
+const LOCAL_STATE_PREFIX = "git-swole-state-v1";
+
+/**
+ * Local state is namespaced per user. Without this, signing out and back in as
+ * somebody else showed the previous account's history — there was one global key
+ * that every user shared.
+ */
+export function localStateKey(userId: string | null | undefined) {
+  return userId ? `${LOCAL_STATE_PREFIX}:${userId}` : LOCAL_STATE_PREFIX;
+}
 export type SyncResult<T = void> = { ok: true; data?: T } | { ok: false; error: string };
 
 export const DEFAULT_APP_STATE: WorkoutAppState = {
   settings: {
     units: "lb",
     weightIncrement: 5,
-    restTimerSeconds: 90,
+    restAfterHit: 90,
+    restAfterMiss: 300,
     barbellWeight: 45,
-    plateInventory: [
-      { weight: 45, pairs: 99 },
-      { weight: 35, pairs: 99 },
-      { weight: 25, pairs: 99 },
-      { weight: 10, pairs: 99 },
-      { weight: 5, pairs: 99 },
-      { weight: 2.5, pairs: 99 },
-    ],
+    plateInventory: DEFAULT_PLATE_INVENTORY,
     workoutGroups: DEFAULT_WORKOUT_GROUPS,
   },
   progression: DEFAULT_PROGRESSION,
@@ -77,6 +81,9 @@ function migrateLegacyWorkoutGroups(settings: Partial<WorkoutAppState["settings"
             exerciseId: exercise.exerciseId,
             sets: Math.max(1, Number(exercise.sets || 5)),
             reps: Math.max(1, Number(exercise.reps || 5)),
+            // Programs saved before modes existed are all barbell work.
+            inc: Number.isFinite(Number(exercise.inc)) ? Number(exercise.inc) : 5,
+            mode: exercise.mode ?? "BB",
           })),
       }))
       .filter((group) => group.exercises.length > 0);
@@ -100,6 +107,8 @@ function migrateLegacyWorkoutGroups(settings: Partial<WorkoutAppState["settings"
         exerciseId,
         sets: 5,
         reps: 5,
+        inc: 5,
+        mode: "BB" as const,
       })),
     },
     {
@@ -109,6 +118,8 @@ function migrateLegacyWorkoutGroups(settings: Partial<WorkoutAppState["settings"
         exerciseId,
         sets: idx === 2 && exerciseId === "deadlift" ? 1 : 5,
         reps: 5,
+        inc: exerciseId === "deadlift" ? 10 : 5,
+        mode: "BB" as const,
       })),
     },
   ];
@@ -149,12 +160,12 @@ function normalizeWorkoutLogType(workoutType: string) {
   return workoutType;
 }
 
-export function loadLocalState(): WorkoutAppState {
+export function loadLocalState(userId: string | null | undefined): WorkoutAppState {
   if (typeof window === "undefined") {
     return DEFAULT_APP_STATE;
   }
 
-  const raw = window.localStorage.getItem(LOCAL_STATE_KEY);
+  const raw = window.localStorage.getItem(localStateKey(userId));
   if (!raw) {
     return DEFAULT_APP_STATE;
   }
@@ -189,11 +200,11 @@ export function loadLocalState(): WorkoutAppState {
   }
 }
 
-export function persistLocalState(state: WorkoutAppState) {
+export function persistLocalState(userId: string | null | undefined, state: WorkoutAppState) {
   if (typeof window === "undefined") {
     return;
   }
-  window.localStorage.setItem(LOCAL_STATE_KEY, JSON.stringify(state));
+  window.localStorage.setItem(localStateKey(userId), JSON.stringify(state));
 }
 
 export async function syncFromSupabase(
@@ -211,7 +222,7 @@ export async function syncFromSupabase(
       supabase.from("users").select("*").eq("id", userId).single(),
       supabase
         .from("workouts")
-      .select("id,date,workout_type,note,workout_sets(exercise_id,exercise_key,exercise_name,weight,reps,completed,set_number)")
+      .select("id,date,workout_type,note,duration_seconds,workout_sets(exercise_id,exercise_key,exercise_name,weight,reps,completed,set_number)")
         .eq("user_id", userId)
         .order("date", { ascending: false }),
     ]);
@@ -265,6 +276,7 @@ export async function syncFromSupabase(
         id: workout.id,
         userId,
         date: workout.date,
+        durationSeconds: workout.duration_seconds ?? undefined,
         workoutType: normalizeWorkoutLogType(workout.workout_type),
         workoutNote: noteParts.workoutNote,
         workoutSummary: noteParts.workoutSummary,
@@ -290,7 +302,8 @@ export async function syncFromSupabase(
         ...DEFAULT_APP_STATE.settings,
         units: settingsRes.data.units,
         weightIncrement: settingsRes.data.weight_increment,
-        restTimerSeconds: settingsRes.data.rest_timer_seconds,
+        restAfterHit: settingsRes.data.rest_timer_seconds,
+        restAfterMiss: settingsRes.data.rest_after_miss_seconds ?? DEFAULT_APP_STATE.settings.restAfterMiss,
         barbellWeight: settingsRes.data.barbell_weight,
         plateInventory: normalizePlateInventory(settingsRes.data.plate_inventory),
         workoutGroups: syncedWorkoutGroups,
@@ -325,7 +338,8 @@ export async function persistSupabaseState(
       id: userId,
       units: state.settings.units,
       weight_increment: state.settings.weightIncrement,
-      rest_timer_seconds: state.settings.restTimerSeconds,
+      rest_timer_seconds: state.settings.restAfterHit,
+      rest_after_miss_seconds: state.settings.restAfterMiss,
       barbell_weight: state.settings.barbellWeight,
       plate_inventory: state.settings.plateInventory,
       workout_groups: state.settings.workoutGroups,

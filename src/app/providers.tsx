@@ -1,6 +1,6 @@
 "use client";
 
-import { ClerkProvider } from "@clerk/nextjs";
+import { AuthProvider } from "@/lib/auth";
 import { WorkoutAppProvider } from "@/context/workout-app-context";
 
 type ProvidersProps = {
@@ -9,8 +9,8 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
       <WorkoutAppProvider>{children}</WorkoutAppProvider>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

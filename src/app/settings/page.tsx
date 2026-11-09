@@ -3,356 +3,253 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useWorkoutApp } from "@/context/workout-app-context";
-import { EXERCISES } from "@/lib/program";
-import { WorkoutTemplate } from "@/lib/types";
+import { ScrollStrip } from "@/components/scroll-strip";
+import { WeightUnit } from "@/lib/types";
 
-type SettingsTab = "preferences" | "program" | "custom" | "data";
+function Stepper({
+  value,
+  onChange,
+  step,
+  min,
+  max,
+  suffix,
+  format,
+  tone = "ink",
+}: {
+  value: number;
+  onChange: (next: number) => void;
+  step: number;
+  min: number;
+  max: number;
+  suffix?: string;
+  format?: (value: number) => string;
+  tone?: "ink" | "green" | "amber";
+}) {
+  const clamp = (next: number) => Math.min(max, Math.max(min, Number(next.toFixed(2))));
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => onChange(clamp(value - step))}
+        className="label h-[44px] w-[44px] border border-line text-[14px] text-ink-2 hover:border-amber hover:text-amber"
+      >
+        −
+      </button>
+      <span
+        className={`num w-[86px] text-center text-[26px] ${
+          tone === "green" ? "text-green" : tone === "amber" ? "text-amber" : "text-ink"
+        }`}
+      >
+        {format ? format(value) : value}
+        {suffix ? <span className="label ml-1 text-[8px] text-dim">{suffix}</span> : null}
+      </span>
+      <button
+        onClick={() => onChange(clamp(value + step))}
+        className="label h-[44px] w-[44px] border border-line text-[14px] text-ink-2 hover:border-green hover:text-green"
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
-export default function SettingsPage() {
-  const { settings, updateSettings, exerciseCatalog, createOrUpdateUserExercise } = useWorkoutApp();
-  const [newExerciseName, setNewExerciseName] = useState("");
-  const [saveMessage, setSaveMessage] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<SettingsTab>("preferences");
+function formatRest(seconds: number) {
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
 
-  const availableProgramExercises =
-    exerciseCatalog.length > 0
-      ? exerciseCatalog.map((exercise) => ({ id: exercise.id, name: exercise.name }))
-      : EXERCISES.map((exercise) => ({ id: exercise.key, name: exercise.name }));
+function Row({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line-faint py-4">
+      <div>
+        <div className="label text-[10px] text-ink">{label}</div>
+        {hint ? <div className="label mt-1.5 text-[8.5px] font-normal text-dim">{hint}</div> : null}
+      </div>
+      {children}
+    </div>
+  );
+}
 
-  const updateGroups = (updater: (current: WorkoutTemplate[]) => WorkoutTemplate[]) => {
-    updateSettings({ workoutGroups: updater(settings.workoutGroups) });
-  };
+export default function SettingsScreen() {
+  const { settings, updateSettings, stateLoaded, exerciseCatalog, syncStatus } = useWorkoutApp();
+  const [section, setSection] = useState<"preferences" | "plates" | "data">("preferences");
 
-  const addGroup = () => {
-    const nextIndex = settings.workoutGroups.length + 1;
-    updateGroups((current) => [
-      ...current,
-      {
-        id: `workout-${crypto.randomUUID().slice(0, 8)}`,
-        name: `Workout ${nextIndex}`,
-        exercises: [{ exerciseId: availableProgramExercises[0]?.id ?? "squat", sets: 5, reps: 5 }],
-      },
-    ]);
-  };
+  if (!stateLoaded) {
+    return <div className="label px-[22px] py-10 text-[10px] text-dim desk:px-[26px]">Loading</div>;
+  }
 
-  const removeGroup = (groupId: string) => {
-    updateGroups((current) => current.filter((group) => group.id !== groupId));
-  };
-
-  const renameGroup = (groupId: string, name: string) => {
-    updateGroups((current) =>
-      current.map((group) => (group.id === groupId ? { ...group, name: name || "Workout" } : group)),
-    );
-  };
-
-  const updateGroupExercise = (
-    groupId: string,
-    exerciseIndex: number,
-    changes: Partial<WorkoutTemplate["exercises"][number]>,
-  ) => {
-    updateGroups((current) =>
-      current.map((group) => {
-        if (group.id !== groupId) return group;
-        const exercises = [...group.exercises];
-        exercises[exerciseIndex] = { ...exercises[exerciseIndex], ...changes };
-        return { ...group, exercises };
-      }),
-    );
-  };
-
-  const addGroupExercise = (groupId: string) => {
-    updateGroups((current) =>
-      current.map((group) => {
-        if (group.id !== groupId) return group;
-        return {
-          ...group,
-          exercises: [
-            ...group.exercises,
-            {
-              exerciseId: availableProgramExercises[0]?.id ?? "squat",
-              sets: 5,
-              reps: 5,
-            },
-          ],
-        };
-      }),
-    );
-  };
-
-  const removeGroupExercise = (groupId: string, exerciseIndex: number) => {
-    updateGroups((current) =>
-      current.map((group) => {
-        if (group.id !== groupId) return group;
-        const exercises = group.exercises.filter((_, idx) => idx !== exerciseIndex);
-        return { ...group, exercises: exercises.length > 0 ? exercises : group.exercises };
-      }),
-    );
-  };
-
-  const tabClass = (tab: SettingsTab) =>
-    `rounded-md px-3 py-1.5 text-sm ${activeTab === tab ? "bg-[#45bb7c] font-medium text-[#112019]" : "bg-[#2b3a43] text-white"}`;
-  const updatePlatePairs = (weight: number, pairs: number) => {
-    updateSettings({
-      plateInventory: settings.plateInventory.map((item) =>
-        item.weight === weight ? { ...item, pairs: Math.max(0, pairs) } : item,
-      ),
-    });
-  };
+  const sections = [
+    { key: "preferences" as const, label: "Preferences", hint: "Units · rest" },
+    { key: "plates" as const, label: "Plate inventory", hint: "Bar · pairs on hand" },
+    { key: "data" as const, label: "Exercises & data", hint: "Catalog · import · sync" },
+  ];
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Settings</h1>
-      <div className="flex flex-wrap gap-2">
-        <button type="button" className={tabClass("preferences")} onClick={() => setActiveTab("preferences")}>
-          Preferences
-        </button>
-        <button type="button" className={tabClass("program")} onClick={() => setActiveTab("program")}>
-          Program
-        </button>
-        <button type="button" className={tabClass("custom")} onClick={() => setActiveTab("custom")}>
-          Custom Exercises
-        </button>
-        <button type="button" className={tabClass("data")} onClick={() => setActiveTab("data")}>
-          Data
-        </button>
+    <div className="px-[22px] py-5 desk:px-[26px]">
+      {/* The strip already names the section; on a phone the headline is a duplicate. */}
+      <h1 className="num mb-6 hidden text-[56px] uppercase leading-[0.9] desk:block desk:text-[64px]">
+        {sections.find((item) => item.key === section)?.label ?? "Settings"}
+      </h1>
+
+      <div className="-mx-[22px] mb-6 border-y border-line desk:mx-0">
+        <ScrollStrip>
+          {sections.map((item) => {
+          const active = item.key === section;
+          return (
+            <button
+              key={item.key}
+              onClick={() => setSection(item.key)}
+              className={`min-w-[170px] shrink-0 border-b-2 px-4 py-3 text-left ${
+                active ? "border-green bg-subtle" : "border-transparent hover:bg-hover"
+              }`}
+            >
+              <div className={`label text-[9px] ${active ? "text-ink" : "text-dim"}`}>{item.label}</div>
+                <div className="label mt-1 text-[8px] font-normal text-dim">{item.hint}</div>
+              </button>
+            );
+          })}
+        </ScrollStrip>
       </div>
 
-      {activeTab === "preferences" ? (
-        <div className="space-y-4">
-          <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-            <label className="text-sm text-[#9ab0bd]">Weight Units</label>
-            <select
-              className="mt-1 block rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-              value={settings.units}
-              onChange={(event) => updateSettings({ units: event.target.value as "lb" | "kg" })}
-            >
-              <option value="lb">lbs</option>
-              <option value="kg">kg</option>
-            </select>
-          </div>
-
-          <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-            <label className="text-sm text-[#9ab0bd]">Weight Increment</label>
-            <select
-              className="mt-1 block rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-              value={settings.weightIncrement}
-              onChange={(event) =>
-                updateSettings({ weightIncrement: Number(event.target.value) as 2.5 | 5 | 10 })
-              }
-            >
-              <option value={2.5}>2.5</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-            </select>
-          </div>
-
-          <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-            <label className="text-sm text-[#9ab0bd]">Rest Timer Duration (seconds)</label>
-            <input
-              className="mt-1 block w-full rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-              type="number"
-              value={settings.restTimerSeconds}
-              onChange={(event) => updateSettings({ restTimerSeconds: Number(event.target.value) })}
-            />
-          </div>
-
-          <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-            <label className="text-sm text-[#9ab0bd]">Bar Weight</label>
-            <input
-              className="mt-1 block w-full rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-              type="number"
-              value={settings.barbellWeight}
-              onChange={(event) => updateSettings({ barbellWeight: Number(event.target.value) })}
-            />
-          </div>
-
-          <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-            <div className="text-sm text-[#9ab0bd]">Plate Inventory (pairs)</div>
-            <div className="mt-2 grid gap-2 sm:grid-cols-2">
-              {settings.plateInventory
-                .sort((a, b) => b.weight - a.weight)
-                .map((plate) => (
-                  <label key={plate.weight} className="flex items-center justify-between gap-2 text-sm">
-                    <span>{plate.weight} lb</span>
-                    <input
-                      className="w-24 rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-                      type="number"
-                      min={0}
-                      value={plate.pairs}
-                      onChange={(event) => updatePlatePairs(plate.weight, Number(event.target.value))}
-                    />
-                  </label>
-                ))}
+      {section === "preferences" ? (
+        <>
+          <Row label="Weight units" hint="Relabels every unit in the app">
+            <div className="flex">
+              {(["lb", "kg"] as WeightUnit[]).map((unit) => (
+                <button
+                  key={unit}
+                  onClick={() => updateSettings({ units: unit })}
+                  className={`label border px-5 py-3 text-[9.5px] ${
+                    settings.units === unit
+                      ? "border-green bg-green-wash-tint text-green"
+                      : "border-line text-dim hover:text-ink-2"
+                  }`}
+                >
+                  {unit}
+                </button>
+              ))}
             </div>
-          </div>
-        </div>
+          </Row>
+
+          <Row label="Rest after a good set" hint="All reps hit · 15 s steps">
+            <Stepper
+              value={settings.restAfterHit}
+              onChange={(next) => updateSettings({ restAfterHit: next })}
+              step={15}
+              min={30}
+              max={600}
+              format={formatRest}
+              tone="green"
+            />
+          </Row>
+
+          <Row label="Rest after a missed set" hint="Reps missed · 15 s steps">
+            <Stepper
+              value={settings.restAfterMiss}
+              onChange={(next) => updateSettings({ restAfterMiss: next })}
+              step={15}
+              min={60}
+              max={900}
+              format={formatRest}
+              tone="amber"
+            />
+          </Row>
+        </>
       ) : null}
 
-      {activeTab === "program" ? (
-        <div className="space-y-4">
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={addGroup}
-              className="rounded-md bg-[#45bb7c] px-3 py-1.5 text-sm font-medium text-[#112019]"
-            >
-              Add Workout Group
-            </button>
+      {section === "plates" ? (
+        <>
+          {/* The bar is the base of every loaded weight, so it sits with the plates. */}
+          <Row label="Bar weight" hint="The base of every loaded weight · 5 lb steps">
+            <Stepper
+              value={settings.barbellWeight}
+              onChange={(next) => updateSettings({ barbellWeight: next })}
+              step={5}
+              min={15}
+              max={65}
+              suffix={settings.units}
+            />
+          </Row>
+
+          <div className="label mt-8 grid grid-cols-[1fr_auto_80px] items-center gap-3 border-b border-line py-3 text-[9px] text-dim">
+            <span>Plate</span>
+            <span>Pairs</span>
+            <span className="text-right">Total</span>
           </div>
-
-          {settings.workoutGroups.map((group) => (
-            <div key={group.id} className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-              <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
-                <div>
-                  <label className="text-xs text-[#9ab0bd]">Group name</label>
-                  <input
-                    className="mt-1 block rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-sm"
-                    value={group.name}
-                    onChange={(event) => renameGroup(group.id, event.target.value)}
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeGroup(group.id)}
-                  disabled={settings.workoutGroups.length <= 1}
-                  className="rounded bg-red-600 px-3 py-1.5 text-xs text-white disabled:bg-[#334753] disabled:text-[#8ca5b3]"
-                >
-                  Remove Group
-                </button>
+          {settings.plateInventory.map((plate, index) => (
+            <div
+              key={plate.weight}
+              className="grid grid-cols-[1fr_auto_80px] items-center gap-3 border-b border-line-faint py-3"
+            >
+              <div>
+                <span className="num text-[26px]">{plate.weight}</span>
+                <span className="label ml-2 text-[8px] text-dim">{settings.units}</span>
               </div>
-
-              <div className="space-y-2">
-                {group.exercises.map((exercise, exerciseIndex) => (
-                  <div key={`${group.id}-${exerciseIndex}`} className="grid gap-2 md:grid-cols-[2fr_1fr_1fr_auto]">
-                    <select
-                      className="rounded border border-[#334753] bg-[#2b3a43] px-2 py-1"
-                      value={exercise.exerciseId}
-                      onChange={(event) =>
-                        updateGroupExercise(group.id, exerciseIndex, { exerciseId: event.target.value })
-                      }
-                    >
-                      {availableProgramExercises.map((exerciseDef) => (
-                        <option key={exerciseDef.id} value={exerciseDef.id}>
-                          {exerciseDef.name}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      className="rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-sm"
-                      type="number"
-                      min={1}
-                      value={exercise.sets}
-                      onChange={(event) =>
-                        updateGroupExercise(group.id, exerciseIndex, {
-                          sets: Math.max(1, Number(event.target.value) || 1),
-                        })
-                      }
-                    />
-                    <input
-                      className="rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-sm"
-                      type="number"
-                      min={1}
-                      value={exercise.reps}
-                      onChange={(event) =>
-                        updateGroupExercise(group.id, exerciseIndex, {
-                          reps: Math.max(1, Number(event.target.value) || 1),
-                        })
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-xs"
-                      onClick={() => removeGroupExercise(group.id, exerciseIndex)}
-                      disabled={group.exercises.length <= 1}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-3 flex justify-between text-xs text-[#9ab0bd]">
-                <span>Columns: Exercise / Sets / Reps</span>
-                <button
-                  type="button"
-                  onClick={() => addGroupExercise(group.id)}
-                  className="rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-xs text-white"
-                >
-                  Add Exercise
-                </button>
-              </div>
+              <Stepper
+                value={plate.pairs}
+                step={1}
+                min={0}
+                max={20}
+                onChange={(next) =>
+                  updateSettings({
+                    plateInventory: settings.plateInventory.map((item, itemIndex) =>
+                      itemIndex === index ? { ...item, pairs: next } : item,
+                    ),
+                  })
+                }
+              />
+              <span
+                className={`label text-right text-[9px] ${plate.pairs === 0 ? "text-off" : "text-dim"}`}
+              >
+                {plate.pairs === 0 ? "Not owned" : `${plate.weight * plate.pairs * 2} ${settings.units}`}
+              </span>
             </div>
           ))}
-        </div>
+        </>
       ) : null}
 
-      {activeTab === "custom" ? (
-        <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-          <div className="text-sm text-[#9ab0bd]">Custom Exercises</div>
-          <div className="mt-3 flex flex-wrap items-end gap-2">
-            <div>
-              <label className="block text-xs text-[#9ab0bd]">Exercise name</label>
-              <input
-                className="mt-1 rounded border border-[#334753] bg-[#2b3a43] px-2 py-1 text-sm"
-                value={newExerciseName}
-                onChange={(event) => setNewExerciseName(event.target.value)}
-                placeholder="e.g. Bulgarian Split Squat"
-              />
-            </div>
-            <button
-              type="button"
-              className="rounded-md bg-[#45bb7c] px-3 py-1.5 text-sm font-medium text-[#112019] disabled:bg-[#334753] disabled:text-[#8ca5b3]"
-              disabled={!newExerciseName.trim()}
-              onClick={async () => {
-                const name = newExerciseName.trim();
-                if (!name) return;
-                const result = await createOrUpdateUserExercise({
-                  name,
-                  primaryMuscle: "Unknown",
-                  secondaryMuscles: [],
-                  equipment: "Unknown",
-                  movementPattern: "Unknown",
-                  description: "User-created exercise",
-                });
-                if (result.ok) {
-                  setSaveMessage(`Saved "${name}"`);
-                  setNewExerciseName("");
-                } else {
-                  setSaveMessage(result.error || "Failed to save exercise.");
-                }
-              }}
+      {section === "data" ? (
+        <>
+          <Row label="Import history" hint="StrongLifts CSV export">
+            <Link
+              href="/import"
+              className="label border border-line px-4 py-3 text-[9px] text-ink-2 hover:border-green hover:text-green"
             >
-              Save Exercise
-            </button>
-          </div>
-          {saveMessage ? <div className="mt-2 text-xs text-[#c7d7e0]">{saveMessage}</div> : null}
-          <div className="mt-3 max-h-56 space-y-1 overflow-auto rounded bg-[#2b3a43] p-2 text-sm">
-            {exerciseCatalog.map((exercise) => (
-              <div key={exercise.id} className="flex items-center justify-between rounded px-2 py-1">
-                <span>{exercise.name}</span>
-                <span className="text-xs text-[#9ab0bd]">{exercise.ownership}</span>
-              </div>
-            ))}
-            {exerciseCatalog.length === 0 ? (
-              <div className="px-2 py-1 text-xs text-[#9ab0bd]">No exercises loaded yet.</div>
-            ) : null}
-          </div>
-        </div>
-      ) : null}
+              Open →
+            </Link>
+          </Row>
+          <Row label="Sync" hint="Signed-in sessions sync through Supabase">
+            <span className={`label text-[9px] ${syncStatus === "error" ? "text-amber" : "text-dim"}`}>
+              {syncStatus}
+            </span>
+          </Row>
+          <Row label="Exercise catalog" hint="Global lifts plus anything you have added">
+            <span className="num text-[26px]">{exerciseCatalog.length}</span>
+          </Row>
 
-      {activeTab === "data" ? (
-        <div className="rounded-xl border border-[#334753] bg-[#24323a] p-4">
-          <div className="text-sm text-[#9ab0bd]">Data Management</div>
-          <p className="mt-2 text-sm text-[#d7e4eb]">
-            Import StrongLifts CSV history and sync it to your account.
-          </p>
-          <Link
-            href="/import"
-            className="mt-3 inline-block rounded-md bg-[#45bb7c] px-3 py-1.5 text-sm font-medium text-[#112019]"
-          >
-            Open Import Tool
-          </Link>
-        </div>
+          <div className="mt-6 flex flex-wrap gap-1.5">
+            {exerciseCatalog.map((exercise) => (
+              <span
+                key={exercise.id}
+                className={`label border px-2.5 py-2 text-[8.5px] ${
+                  exercise.ownership === "user" ? "border-green text-green" : "border-line text-dim"
+                }`}
+              >
+                {exercise.name}
+              </span>
+            ))}
+          </div>
+
+          <div className="label mt-10 border-t border-line pt-5 text-[8.5px] font-normal text-dim">
+            Built by Christina Branson ·{" "}
+            <a
+              href="https://github.com/christinabranson/git-swole"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green hover:underline"
+            >
+              Repo
+            </a>
+          </div>
+        </>
       ) : null}
     </div>
   );

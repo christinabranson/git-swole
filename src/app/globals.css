@@ -1,35 +1,168 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens from design_handoff_git_swole/README.md.
+ * Hex values are exact — do not eyeball replacements.
+ */
 :root {
-  --background: #1c262d;
-  --foreground: #ffffff;
-  --accent: #45bb7c;
-  --panel: #24323a;
-  --panel-soft: #2b3a43;
-  --border: #334753;
-  --muted: #9ab0bd;
+  /* Surfaces */
+  --bg: #0b0e10;
+  --surface-raised: #0e1113;
+  --surface-panel: #161b1e;
+  --surface-subtle: #141a1d;
+  --surface-hover: #101518;
+
+  /* Bar diagram plate fills */
+  --plate-heavy: #20272b;
+  --plate-light: #171d20;
+
+  /* Lines */
+  --border: #23292d;
+  --border-faint: #1a1f22;
+
+  /* Text */
+  --text-primary: #edede7;
+  --text-secondary: #b9c4c8;
+  --text-dim: #7c8a91;
+  --text-disabled: #3d4649;
+  --text-faint: #5c686d;
+
+  /* Accents — the only two colours in the app */
+  --green: #45bb7c;
+  --amber: #e8a33d;
+
+  --green-wash: rgba(69, 187, 124, 0.16);
+  --green-wash-faint: rgba(69, 187, 124, 0.07);
+  --green-wash-tint: rgba(69, 187, 124, 0.12);
+  --amber-wash: rgba(232, 163, 61, 0.18);
+  --amber-wash-faint: rgba(232, 163, 61, 0.14);
+  --amber-border: rgba(232, 163, 61, 0.4);
+
+  /* Rest timer tracks */
+  --ring-track: #1c2226;
+  --ring-track-bar: #161b1e;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
+  --color-bg: var(--bg);
+  --color-raised: var(--surface-raised);
+  --color-panel: var(--surface-panel);
+  --color-subtle: var(--surface-subtle);
+  --color-hover: var(--surface-hover);
+
+  --color-plate-heavy: var(--plate-heavy);
+  --color-plate-light: var(--plate-light);
+
+  --color-line: var(--border);
+  --color-line-faint: var(--border-faint);
+
+  --color-ink: var(--text-primary);
+  --color-ink-2: var(--text-secondary);
+  --color-dim: var(--text-dim);
+  --color-off: var(--text-disabled);
+  --color-faint: var(--text-faint);
+
+  --color-green: var(--green);
+  --color-amber: var(--amber);
+
+  --color-green-wash: var(--green-wash);
+  --color-green-wash-faint: var(--green-wash-faint);
+  --color-green-wash-tint: var(--green-wash-tint);
+  --color-amber-wash: var(--amber-wash);
+  --color-amber-wash-faint: var(--amber-wash-faint);
+  --color-amber-line: var(--amber-border);
+
+  --color-ring-track: var(--ring-track);
+  --color-ring-track-bar: var(--ring-track-bar);
+
+  --font-display: var(--font-anton);
+  --font-mono: var(--font-plex-mono);
+
+  /* Desktop layout starts here; below this the mobile layout is used. */
+  --breakpoint-desk: 900px;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-poppins), sans-serif;
+/*
+ * These live in @layer base so utilities still win. Unlayered rules beat layered
+ * ones in the cascade, which silently broke `border-transparent` on inputs.
+ */
+@layer base {
+  html,
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+  }
+
+  body {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Square corners everywhere: the design has no rounded content. */
+  button,
+  input,
+  select,
+  textarea {
+    border-radius: 0;
+    font-family: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  /* Buttons shift 1px down on press. */
+  button:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  input,
+  select,
+  textarea {
+    background: transparent;
+    border: 1px solid var(--border);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+
+  ::placeholder {
+    color: var(--text-disabled);
+  }
 }
 
-input,
-select,
-textarea {
-  background: var(--panel-soft);
-  color: var(--foreground);
-  border-color: var(--border);
-}
+/*
+ * Numbers are Anton, words are Plex Mono and always tracked out.
+ * These two classes carry most of the type system.
+ *
+ * They live in @layer components so per-element Tailwind utilities still win —
+ * unlayered rules beat layered ones, which silently swallowed every `leading-*`
+ * and `tracking-*` override applied on top of them.
+ */
+@layer components {
+  .num {
+    font-family: var(--font-anton), ui-sans-serif, sans-serif;
+    font-weight: 400;
+    line-height: 0.8;
+    font-variant-numeric: tabular-nums;
+  }
 
-::placeholder {
-  color: var(--muted);
+  .label {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }

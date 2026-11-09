@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"><style>body{margin:0;background:#08090A;font-family:'IBM Plex Mono',ui-monospace,monospace}a{color:#45BB7C}a:hover{color:#6FD3A0}*{box-sizing:border-box}::-webkit-scrollbar{width:0;height:0}</style></helmet>
+<div style="display:flex;gap:44px;align-items:flex-start;padding:44px;color:#EDEDE7">
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><span style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.18em;color:#45BB7C">V2 · LEDGER</span><span style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.06em;color:#7C8A91">ONE SET AT A TIME → QUEUE UNDERNEATH</span></div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="height:100%;display:flex;flex-direction:column;background:#0E1113;padding-top:52px;position:relative;overflow:hidden">
+
+<sc-if value="{{ inApp }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 22px 14px">
+<div style="display:flex;align-items:center;gap:9px"><img src="./public/gitswole.png" alt="Git Swole" style="width:24px;height:24px;border-radius:5px;object-fit:cover"><div style="font:600 11px/1 'IBM Plex Mono';letter-spacing:.22em">GIT SWOLE</div></div>
+</div>
+
+<div style="flex:1;overflow-y:auto;min-height:0">
+
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="padding:10px 22px 0">
+<div style="font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">THIS WEEK</div>
+<div style="margin-top:12px;display:flex;gap:6px">
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">MON</div><div style="margin-top:7px;height:34px;background:#45BB7C;color:#0E1113;display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton">B</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">TUE</div><div style="margin-top:7px;height:34px;background:#161B1E;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9px/1 'IBM Plex Mono';letter-spacing:.1em">REST</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#45BB7C;text-align:center">WED</div><div style="margin-top:7px;height:34px;border:1.5px solid #45BB7C;color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton">A</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">THU</div><div style="margin-top:7px;height:34px;background:#161B1E;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9px/1 'IBM Plex Mono';letter-spacing:.1em">REST</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">FRI</div><div style="margin-top:7px;height:34px;border:1px solid #23292D;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton">B</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">SAT</div><div style="margin-top:7px;height:34px;border:1px solid #23292D;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton">C</div></div>
+<div style="flex:1"><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;text-align:center">SUN</div><div style="margin-top:7px;height:34px;background:#161B1E;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9px/1 'IBM Plex Mono';letter-spacing:.1em">REST</div></div>
+</div>
+</div>
+
+<div style="padding:30px 22px 26px">
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.22em;color:#7C8A91">TODAY · WED AUG 12</div>
+<div style="margin-top:14px;font:400 58px/1 Anton;letter-spacing:.005em;text-transform:uppercase">Workout A</div>
+<div style="margin-top:18px;font:400 10.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#7C8A91">3 LIFTS · 15 SETS · 4,225 {{ unitsUp }} PLANNED</div>
+</div>
+
+<div style="border-top:1px solid #23292D">
+<sc-for list="{{ upNext }}" as="e" hint-placeholder-count="3">
+<div style="border-bottom:1px solid #23292D;padding:21px 22px;display:flex;align-items:center;gap:16px">
+<div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">{{ e.idx }}</div>
+<div style="flex:1;min-width:0">
+<div style="font:500 14px/1 'IBM Plex Mono';letter-spacing:.04em;text-transform:uppercase">{{ e.name }}</div>
+<div style="margin-top:9px;font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">{{ e.scheme }} · LAST {{ e.last }}</div>
+</div>
+<div style="text-align:right">
+<div style="font:400 30px/1 Anton;letter-spacing:.01em">{{ e.weight }}</div>
+<div style="margin-top:5px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:#45BB7C">{{ e.delta }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 14px;font:500 10px/1 'IBM Plex Mono';letter-spacing:.22em;color:#7C8A91">LAST SESSION · MON · 38 MIN</div>
+<div style="padding:0 22px 30px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11px/1 'IBM Plex Mono';letter-spacing:.06em;color:#EDEDE7">SQUAT 180</div>
+<div style="display:flex;gap:4px">
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11px/1 'IBM Plex Mono';letter-spacing:.06em;color:#EDEDE7">OHP 95</div>
+<div style="display:flex;gap:4px">
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+<div style="width:17px;height:17px;background:rgba(232,163,61,.18);color:#E8A33D;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">4</div>
+<div style="width:17px;height:17px;background:rgba(232,163,61,.18);color:#E8A33D;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">3</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11px/1 'IBM Plex Mono';letter-spacing:.06em;color:#EDEDE7">DEADLIFT 245</div>
+<div style="display:flex;gap:4px">
+<div style="width:17px;height:17px;background:rgba(69,187,124,.16);color:#45BB7C;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">5</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="padding:16px 22px 26px"><div style="font:400 44px/1 Anton;text-transform:uppercase">Log</div><div style="margin-top:12px;font:400 10px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">36 SESSIONS · 4 WK STREAK · AVG 41 MIN</div></div>
+<div style="border-top:1px solid #23292D">
+<sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+<div style="border-bottom:1px solid #23292D;padding:20px 22px">
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.14em;text-transform:uppercase">{{ h.day }}</div>
+<div style="font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#7C8A91">{{ h.date }} · {{ h.time }}</div>
+</div>
+<div style="margin-top:14px;display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ h.lines }}" as="l" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 10.5px/1 'IBM Plex Mono';letter-spacing:.06em;color:#B9C4C8">{{ l.name }}</div>
+<sc-if value="{{ l.hasCells }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:4px">
+<sc-for list="{{ l.cells }}" as="c" hint-placeholder-count="5">
+<div style="width:17px;height:17px;background:{{ c.bg }};color:{{ c.fg }};display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono'">{{ c.v }}</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ l.isText }}" hint-placeholder-val="{{ false }}">
+<div style="font:400 10.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#B9C4C8">{{ l.text }}</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProgress }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="padding:16px 22px 22px"><div style="font:400 44px/1 Anton;text-transform:uppercase">Squat</div><div style="margin-top:12px;display:flex;align-items:baseline;gap:10px"><div style="font:400 34px/1 Anton">185</div><div style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.12em;color:#45BB7C">{{ rangeGain }} {{ unitsUp }} {{ rangeLabel }}</div></div></div>
+<div style="padding:0 22px">
+<div style="display:flex;gap:6px">
+<sc-for list="{{ ranges }}" as="r" hint-placeholder-count="5">
+<div onClick="{{ r.onTap }}" style="flex:1;height:30px;border:1px solid {{ r.border }};background:{{ r.bg }};color:{{ r.fg }};display:flex;align-items:center;justify-content:center;font:500 9px/1 'IBM Plex Mono';letter-spacing:.14em;cursor:pointer">{{ r.label }}</div>
+</sc-for>
+</div>
+<svg viewBox="0 0 320 130" style="width:100%;height:130px;overflow:visible;margin-top:16px">
+<line x1="0" y1="110" x2="320" y2="110" stroke="#23292D" stroke-width="1"></line>
+<line x1="0" y1="66" x2="320" y2="66" stroke="#1A1F22" stroke-width="1"></line>
+<line x1="0" y1="22" x2="320" y2="22" stroke="#1A1F22" stroke-width="1"></line>
+<polyline points="{{ chartPoints }}" fill="none" stroke="#EDEDE7" stroke-width="2" stroke-linejoin="round"></polyline>
+<sc-for list="{{ chartDots }}" as="d" hint-placeholder-count="2">
+<circle cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.r }}" fill="{{ d.fill }}" stroke="{{ d.stroke }}" stroke-width="2"></circle>
+</sc-for>
+</svg>
+<div style="display:flex;justify-content:space-between;margin-top:6px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">
+<sc-for list="{{ chartTicks }}" as="t" hint-placeholder-count="3">
+<span>{{ t.label }}</span>
+</sc-for>
+</div>
+</div>
+<div style="margin-top:24px;border-top:1px solid #23292D">
+<div style="border-bottom:1px solid #23292D;padding:20px 22px;display:flex;align-items:baseline;justify-content:space-between"><div style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:#7C8A91">BEST SET</div><div style="font:400 22px/1 Anton">185 × 5</div></div>
+<div style="border-bottom:1px solid #23292D;padding:20px 22px;display:flex;align-items:baseline;justify-content:space-between"><div style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:#7C8A91">BEST VOLUME</div><div style="font:400 22px/1 Anton">4,625</div></div>
+<div style="border-bottom:1px solid #23292D;padding:20px 22px;display:flex;align-items:baseline;justify-content:space-between"><div style="font:400 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:#7C8A91">EST 1RM</div><div style="font:400 22px/1 Anton">208</div></div>
+<div style="padding:15px 22px;display:flex;gap:8px">
+<div style="flex:1;height:32px;border:1px solid #45BB7C;color:#45BB7C;display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.12em">SQUAT</div>
+<div style="flex:1;height:32px;border:1px solid #23292D;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;cursor:pointer" style-hover="border-color:#7C8A91">BENCH</div>
+<div style="flex:1;height:32px;border:1px solid #23292D;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;cursor:pointer" style-hover="border-color:#7C8A91">ROW</div>
+<div style="flex:1;height:32px;border:1px solid #23292D;color:#7C8A91;display:flex;align-items:center;justify-content:center;font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;cursor:pointer" style-hover="border-color:#7C8A91">ERG</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="padding:16px 22px 24px"><div style="font:400 44px/1 Anton;text-transform:uppercase">Settings</div></div>
+
+<div style="border-top:1px solid #23292D">
+<div style="padding:16px 22px;background:#161B1E;font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em">PREFERENCES</div>
+
+<div style="border-bottom:1px solid #23292D;padding:16px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Weight units</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ unitOpts }}" as="o" hint-placeholder-count="2">
+<div onClick="{{ o.onTap }}" style="width:52px;height:34px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;cursor:pointer">{{ o.label }}</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-bottom:1px solid #23292D;padding:16px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Weight increment</div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ incOpts }}" as="o" hint-placeholder-count="3">
+<div onClick="{{ o.onTap }}" style="width:52px;height:34px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;cursor:pointer">{{ o.label }}</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-bottom:1px solid #23292D;padding:16px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1"><div style="font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Rest after a good set</div><div style="margin-top:7px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:#7C8A91;white-space:nowrap">ALL REPS HIT · 15 S STEPS</div></div>
+<div style="display:flex;align-items:center;gap:8px">
+<div onClick="{{ restMinus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#45BB7C">−</div>
+<div style="width:64px;text-align:center;font:400 20px/1 Anton;color:#45BB7C;font-variant-numeric:tabular-nums">{{ restMinLabel }}</div>
+<div onClick="{{ restPlus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#45BB7C">+</div>
+</div>
+</div>
+
+<div style="border-bottom:1px solid #23292D;padding:16px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1"><div style="font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Rest after a missed set</div><div style="margin-top:7px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:#7C8A91;white-space:nowrap">REPS MISSED · 15 S STEPS</div></div>
+<div style="display:flex;align-items:center;gap:8px">
+<div onClick="{{ failMinus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#E8A33D">−</div>
+<div style="width:64px;text-align:center;font:400 20px/1 Anton;color:#E8A33D;font-variant-numeric:tabular-nums">{{ failMinLabel }}</div>
+<div onClick="{{ failPlus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#E8A33D">+</div>
+</div>
+</div>
+
+<div style="border-bottom:1px solid #23292D;padding:16px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Bar weight</div>
+<div style="display:flex;align-items:center;gap:8px">
+<div onClick="{{ barMinus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#45BB7C">−</div>
+<div style="width:58px;text-align:center;font:400 20px/1 Anton">{{ barWeight }}</div>
+<div onClick="{{ barPlus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#45BB7C">+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="padding:16px 22px;background:#161B1E;display:flex;align-items:baseline;justify-content:space-between"><div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em">PLATE INVENTORY</div><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">PAIRS ON HAND</div></div>
+<sc-for list="{{ plateRows }}" as="p" hint-placeholder-count="6">
+<div style="border-bottom:1px solid #23292D;padding:13px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 20px/1 Anton;color:{{ p.fg }}">{{ p.weight }}</div>
+<div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">{{ p.unit }}</div>
+<div style="display:flex;align-items:center;gap:8px;margin-left:10px">
+<div onClick="{{ p.onMinus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer">−</div>
+<div style="width:36px;text-align:center;font:400 11px/1 'IBM Plex Mono';color:{{ p.fg }}">{{ p.pairs }}</div>
+<div onClick="{{ p.onPlus }}" style="width:36px;height:36px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 13px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer">+</div>
+</div>
+</div>
+</sc-for>
+<div style="padding:14px 22px 18px;font:400 9.5px/1.8 'IBM Plex Mono';letter-spacing:.06em;color:#7C8A91">PLATE MATH ON THE SESSION SCREEN ONLY USES PAIRS YOU ACTUALLY OWN. SET A PAIR COUNT TO ZERO AND IT DROPS OUT OF THE CALCULATION.</div>
+</div>
+
+<div>
+<div style="padding:16px 22px;background:#161B1E;font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em;border-top:1px solid #23292D">EXERCISES &amp; DATA</div>
+<div style="border-bottom:1px solid #23292D;padding:17px 22px;display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:#161B1E"><div style="flex:1"><div style="font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Custom exercises</div><div style="margin-top:7px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">4 YOURS · 38 GLOBAL</div></div><div style="font:500 13px/1 'IBM Plex Mono';color:#7C8A91">›</div></div>
+<div style="border-bottom:1px solid #23292D;padding:17px 22px;display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:#161B1E"><div style="flex:1"><div style="font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Import history</div><div style="margin-top:7px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">STRONGLIFTS CSV</div></div><div style="font:500 13px/1 'IBM Plex Mono';color:#7C8A91">›</div></div>
+<div style="border-bottom:1px solid #23292D;padding:17px 22px;display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:#161B1E"><div style="flex:1"><div style="font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Sync</div><div style="margin-top:7px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:#45BB7C">SYNCED · TODAY 09:12</div></div><div style="font:500 13px/1 'IBM Plex Mono';color:#7C8A91">›</div></div>
+<div style="padding:18px 22px 26px;font:400 9.5px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">GIT SWOLE · V2</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProgram }}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="padding:16px 22px 24px"><div style="font:400 44px/1 Anton;text-transform:uppercase">Program</div><div style="margin-top:12px;font:400 10px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">ROTATION A → B → A → C</div></div>
+
+<div style="border-top:1px solid #23292D">
+<div style="padding:16px 22px;display:flex;align-items:center;justify-content:space-between;background:#161B1E"><div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em">DAY A · BARBELL</div><div style="font:500 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#45BB7C">NEXT UP</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Squat</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">5×5 +5</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#45BB7C">[BB]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Bench Press</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">5×5 +5</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#45BB7C">[BB]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Barbell Row</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">5×5 +5</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#45BB7C">[BB]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Chin-up</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">3×AMRAP</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#7C8A91">[BW]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;font:400 10px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91;cursor:pointer" style-hover="color:#EDEDE7">+ ADD EXERCISE</div>
+
+<div style="padding:16px 22px;display:flex;align-items:center;justify-content:space-between;background:#161B1E"><div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em">DAY B · BARBELL</div><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">3 ITEMS</div></div>
+
+<div style="padding:16px 22px;display:flex;align-items:center;justify-content:space-between;background:#161B1E;border-top:1px solid #23292D"><div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.18em">DAY C · CONDITIONING</div><div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">2 ITEMS</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Row · Erg</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">2000 M</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#E8A33D">[DIST]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:18px 22px;display:flex;align-items:center;gap:12px"><div style="flex:1;font:400 12px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">Farmer Carry</div><div style="font:400 10px/1 'IBM Plex Mono';color:#7C8A91;letter-spacing:.1em">4×40 S</div><div style="font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.1em;color:#E8A33D">[TIME]</div></div>
+<div style="border-bottom:1px solid #23292D;padding:15px 22px;font:400 10px/1 'IBM Plex Mono';letter-spacing:.14em;color:#45BB7C;cursor:pointer" style-hover="background:#161B1E">+ NEW DAY</div>
+</div>
+<div style="padding:24px 22px 30px;font:400 10px/1.9 'IBM Plex Mono';letter-spacing:.04em;color:#7C8A91;text-wrap:pretty">EVERY ITEM CARRIES A MODE — [BB] WEIGHT×REPS, [BW] BODYWEIGHT, [TIME], [DIST]. 5×5 PROGRESSION ONLY APPLIES TO [BB] ITEMS, SO CARDIO AND CARRIES LOG IN THE SAME DAY WITHOUT TOUCHING YOUR LIFT NUMBERS.</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ startSession }}" style="margin:0 22px 12px;height:58px;background:#45BB7C;color:#0E1113;display:flex;align-items:center;justify-content:space-between;padding:0 20px;cursor:pointer" style-active="transform:translateY(1px)"><div style="font:500 12px/1 'IBM Plex Mono';letter-spacing:.22em">{{ startLabel }}</div><div style="display:flex;align-items:center;gap:12px"><div style="font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.14em;opacity:.7">{{ startNote }}</div><div style="display:flex;align-items:center;justify-content:center;width:20px;height:22px;font:500 15px/1 'IBM Plex Mono'">→</div></div></div>
+</sc-if>
+
+<div style="display:flex;border-top:1px solid #23292D">
+<div onClick="{{ goToday }}" style="flex:1;padding:14px 0 32px;text-align:center;cursor:pointer;border-top:2px solid {{ uToday }};margin-top:-1px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ cToday }}">TODAY</div>
+<div onClick="{{ goHistory }}" style="flex:1;padding:14px 0 32px;text-align:center;cursor:pointer;border-top:2px solid {{ uHistory }};margin-top:-1px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ cHistory }}">LOG</div>
+<div onClick="{{ goProgress }}" style="flex:1;padding:14px 0 32px;text-align:center;cursor:pointer;border-top:2px solid {{ uProgress }};margin-top:-1px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ cProgress }}">PROGRESS</div>
+<div onClick="{{ goProgram }}" style="flex:1;padding:14px 0 32px;text-align:center;cursor:pointer;border-top:2px solid {{ uProgram }};margin-top:-1px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ cProgram }}">PROGRAM</div>
+<div onClick="{{ goSettings }}" style="flex:1;padding:14px 0 32px;text-align:center;cursor:pointer;border-top:2px solid {{ uSettings }};margin-top:-1px;font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ cSettings }}">SETTINGS</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ inSummary }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;min-height:0">
+<div style="flex:1;overflow-y:auto;min-height:0">
+<div style="padding:22px 22px 28px">
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.22em;color:#45BB7C">WORKOUT A · LOGGED</div>
+<div style="margin-top:14px;display:flex;align-items:baseline;gap:10px"><div style="font:400 72px/.85 Anton">{{ volume }}</div><div style="font:500 11px/1 'IBM Plex Mono';letter-spacing:.16em;color:#7C8A91">{{ unitsUp }} MOVED</div></div>
+<div style="margin-top:14px;font:400 10px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">{{ clock }} · {{ setsLogged }} SETS · SESSION 14</div>
+</div>
+
+<sc-if value="{{ hasPr }}" hint-placeholder-val="{{ true }}">
+<div style="margin:0 22px 20px;border:1px solid #45BB7C;padding:15px 17px">
+<div style="font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.2em;color:#45BB7C">PERSONAL RECORD</div>
+<div style="margin-top:11px;font:400 24px/1.05 Anton;text-transform:uppercase">{{ prLine }}</div>
+</div>
+</sc-if>
+
+<div style="border-top:1px solid #23292D">
+<div style="padding:13px 22px;font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91;background:#161B1E">NEXT SESSION</div>
+<sc-for list="{{ nextTime }}" as="n" hint-placeholder-count="3">
+<div style="border-bottom:1px solid #23292D;padding:19px 22px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;font:400 11.5px/1 'IBM Plex Mono';letter-spacing:.05em;text-transform:uppercase">{{ n.name }}</div>
+<div style="font:400 10px/1 'IBM Plex Mono';color:#3D4649;letter-spacing:.1em">{{ n.from }} →</div>
+<div style="font:400 22px/1 Anton;color:{{ n.color }};width:52px;text-align:right">{{ n.to }}</div>
+<div style="font:500 9px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ n.color }};width:52px;text-align:right">{{ n.note }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:28px 22px 26px">
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">HOW DID IT FEEL</div>
+<div style="margin-top:12px;display:flex;gap:8px">
+<div onClick="{{ feelGood }}" style="flex:1;height:44px;border:1px solid {{ goodBorder }};background:{{ goodBg }};color:{{ goodFg }};display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.14em;cursor:pointer">STRONG</div>
+<div onClick="{{ feelOk }}" style="flex:1;height:44px;border:1px solid {{ okBorder }};background:{{ okBg }};color:{{ okFg }};display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.14em;cursor:pointer">GRINDY</div>
+<div onClick="{{ feelBad }}" style="flex:1;height:44px;border:1px solid {{ badBorder }};background:{{ badBg }};color:{{ badFg }};display:flex;align-items:center;justify-content:center;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.14em;cursor:pointer">ROUGH</div>
+</div>
+</div>
+</div>
+<div onClick="{{ saveWorkout }}" style="margin:0 22px 34px;height:58px;background:#45BB7C;color:#0E1113;display:flex;align-items:center;justify-content:space-between;padding:0 20px;cursor:pointer"><div style="font:500 12px/1 'IBM Plex Mono';letter-spacing:.22em">SAVE TO LOG</div><div style="display:flex;align-items:center;justify-content:center;width:20px;height:22px;font:500 15px/1 'IBM Plex Mono'">→</div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ focusOn }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:42px;bottom:0;background:#0B0E10;z-index:18;display:flex;flex-direction:column">
+
+<div style="flex:none;height:66px;border-bottom:1px solid #23292D;padding:16px 18px 10px;display:flex;align-items:flex-end;gap:12px">
+<img src="./public/gitswole.png" alt="Git Swole" style="width:24px;height:24px;flex:none;border-radius:6px;object-fit:cover">
+<div style="flex:1;min-width:0;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.2em;color:#45BB7C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">WORKOUT A</div>
+<div style="font:400 11px/1 'IBM Plex Mono';letter-spacing:.12em;color:#B9C4C8;font-variant-numeric:tabular-nums">{{ clock }}</div>
+<div onClick="{{ fFinish }}" style="height:24px;display:flex;align-items:center;font:500 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#45BB7C;cursor:pointer" style-hover="color:#6FD3A0">FINISH</div>
+<div onClick="{{ exitFocus }}" style="width:26px;height:24px;display:flex;align-items:center;justify-content:flex-end;font:400 14px/1 'IBM Plex Mono';color:#7C8A91;cursor:pointer" style-hover="color:#EDEDE7">✕</div>
+</div>
+
+<sc-if value="{{ fRest }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center">
+<div style="position:relative;width:250px;height:250px;display:flex;align-items:center;justify-content:center">
+<svg viewBox="0 0 264 264" style="position:absolute;inset:0;width:250px;height:250px;transform:rotate(-90deg)">
+<circle cx="132" cy="132" r="126" fill="none" stroke="#1C2226" stroke-width="3"></circle>
+<circle cx="132" cy="132" r="126" fill="none" stroke="{{ restRing }}" stroke-width="3" stroke-dasharray="791.68" stroke-dashoffset="{{ restDash }}"></circle>
+</svg>
+<div style="font:400 96px/.8 Anton;color:{{ restRing }};font-variant-numeric:tabular-nums">{{ restLabel }}</div>
+</div>
+</div>
+<div style="display:flex;gap:8px;padding:16px 22px 34px">
+<div onClick="{{ addRest }}" style="flex:1;height:58px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:500 10.5px/1 'IBM Plex Mono';letter-spacing:.18em;cursor:pointer;color:#EDEDE7" style-hover="border-color:#EDEDE7">+30 S</div>
+<div onClick="{{ skipRest }}" style="flex:1;height:58px;background:#45BB7C;color:#0E1113;display:flex;align-items:center;justify-content:center;font:500 10.5px/1 'IBM Plex Mono';letter-spacing:.18em;cursor:pointer">NEXT SET</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ fLive }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:none;padding:20px 22px 16px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="padding:6px 9px;border:1px solid {{ fKindFg }};color:{{ fKindFg }};font:500 8.5px/1 'IBM Plex Mono';letter-spacing:.16em">{{ fKind }}</div>
+<div style="flex:1;min-width:0;font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.18em;color:#7C8A91;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ fExName }} · {{ fSetLabel }}</div>
+</div>
+<div style="margin-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+<div style="display:flex;align-items:baseline;gap:8px"><div style="font:400 86px/.8 Anton;color:{{ fWeightFg }}">{{ fWeight }}</div><div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:#7C8A91">{{ unitsUp }}</div></div>
+<div style="display:flex;align-items:center;height:86px">
+<div style="width:24px;height:7px;background:#5C686D"></div>
+<div style="display:flex;align-items:center;gap:2px">
+<sc-for list="{{ fPlateViz }}" as="p" hint-placeholder-count="2">
+<div style="width:{{ p.w }};height:{{ p.h }};background:{{ p.bg }};border:1px solid {{ p.border }};border-radius:2px;flex:none"></div>
+</sc-for>
+</div>
+<div style="width:6px;height:20px;background:#3D4649"></div>
+<div style="width:14px;height:7px;background:#5C686D"></div>
+</div>
+</div>
+<div style="margin-top:12px;font:400 9px/1 'IBM Plex Mono';letter-spacing:.12em;color:{{ fPlateFg }}">{{ fPlateLine }}</div>
+</div>
+
+<div style="flex:none;padding:0 22px;display:flex;align-items:center;gap:12px">
+<div onClick="{{ fMinus }}" style="width:60px;height:60px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 20px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#E8A33D;color:#E8A33D">−</div>
+<div style="flex:1;text-align:center"><div style="font:400 56px/.8 Anton">{{ fReps }}</div><div style="margin-top:8px;font:400 8.5px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">{{ fRepsNote }}</div></div>
+<div onClick="{{ fPlus }}" style="width:60px;height:60px;border:1px solid #23292D;display:flex;align-items:center;justify-content:center;font:400 20px/1 'IBM Plex Mono';color:#EDEDE7;cursor:pointer" style-hover="border-color:#45BB7C;color:#45BB7C">+</div>
+</div>
+
+<div onClick="{{ fLog }}" style="flex:none;margin:18px 22px 16px;height:70px;background:{{ fBtnBg }};border:1px solid {{ fBtnBorder }};color:{{ fBtnFg }};display:flex;align-items:center;justify-content:center;font:500 12px/1 'IBM Plex Mono';letter-spacing:.2em;cursor:pointer" style-active="transform:translateY(1px)">{{ fBtnLabel }}</div>
+
+<div style="flex:1;min-height:0;overflow-y:auto;border-top:1px solid #23292D">
+<div style="padding:12px 22px;display:flex;align-items:center;justify-content:space-between;background:#161B1E">
+<div style="font:500 9px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">SESSION QUEUE</div>
+<div style="font:400 9px/1 'IBM Plex Mono';letter-spacing:.14em;color:#45BB7C">{{ fQueueCount }}</div>
+</div>
+<sc-for list="{{ fGroups }}" as="g" hint-placeholder-count="3">
+<div onClick="{{ g.onTap }}" style="border-bottom:1px solid #23292D;padding:14px 22px;background:{{ g.bg }};border-left:2px solid {{ g.bar }}">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="flex:1;min-width:0;font:500 10px/1 'IBM Plex Mono';letter-spacing:.1em;color:{{ g.fg }};text-transform:uppercase">{{ g.name }}</div>
+<div style="font:400 8.5px/1 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91">{{ g.meta }}</div>
+</div>
+<div style="margin-top:11px;display:flex;align-items:center;gap:5px">
+<sc-for list="{{ g.warmCells }}" as="c" hint-placeholder-count="3">
+<div onClick="{{ c.onTap }}" style="width:34px;height:34px;background:{{ c.bg }};border:1px solid {{ c.border }};color:{{ c.fg }};display:flex;align-items:center;justify-content:center;font:400 13px/1 Anton;cursor:pointer">{{ c.label }}</div>
+</sc-for>
+<div style="width:1px;height:22px;background:#23292D;margin:0 4px"></div>
+<sc-for list="{{ g.workCells }}" as="c" hint-placeholder-count="5">
+<div onClick="{{ c.onTap }}" style="width:34px;height:34px;background:{{ c.bg }};border:1px solid {{ c.border }};color:{{ c.fg }};display:flex;align-items:center;justify-content:center;font:400 15px/1 Anton;cursor:pointer">{{ c.label }}</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ fDone }}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:24px 22px 30px">
+<div>
+<div style="font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.22em;color:#45BB7C">WORKOUT A COMPLETE</div>
+<div style="margin-top:16px;font:400 60px/.84 Anton;text-transform:uppercase">{{ fHead }}</div>
+<div style="margin-top:16px;font:400 10px/1.7 'IBM Plex Mono';letter-spacing:.12em;color:#7C8A91;text-wrap:pretty">{{ fQuote }}</div>
+</div>
+<div style="display:flex;gap:8px">
+<div style="flex:1;border:1px solid #23292D;padding:14px"><div style="font:400 26px/1 Anton;color:#45BB7C">{{ fSets }}</div><div style="margin-top:7px;font:400 8px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">SETS</div></div>
+<div style="flex:1;border:1px solid #23292D;padding:14px"><div style="font:400 26px/1 Anton">{{ fVolume }}</div><div style="margin-top:7px;font:400 8px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">{{ unitsUp }} MOVED</div></div>
+<div style="flex:1;border:1px solid #23292D;padding:14px"><div style="font:400 26px/1 Anton">{{ fMinutes }}</div><div style="margin-top:7px;font:400 8px/1 'IBM Plex Mono';letter-spacing:.14em;color:#7C8A91">MINUTES</div></div>
+</div>
+<div onClick="{{ fFinish }}" style="height:64px;background:#45BB7C;color:#0E1113;display:flex;align-items:center;justify-content:center;font:500 11.5px/1 'IBM Plex Mono';letter-spacing:.2em;cursor:pointer">REVIEW & SAVE</div>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+
+</div>
+</x-import>
+</div>
+
+<aside style="width:300px;display:flex;flex-direction:column;gap:20px;padding-top:34px">
+<div>
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#45BB7C">THE IDEA</div>
+<div style="margin-top:12px;font:400 11.5px/1.75 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8">A training log, not a dashboard. Hairlines instead of cards, one accent, and numbers big enough to read from arm's length with a bar in your hands.</div>
+</div>
+<div>
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">WHAT'S DIFFERENT</div>
+<div style="margin-top:12px;display:flex;flex-direction:column;gap:11px;font:400 11.5px/1.7 'IBM Plex Mono';letter-spacing:.01em;color:#B9C4C8">
+<div>The session screen is one set at a time. Weight, plate math and a loaded-bar diagram sit at the top, a thumb-sized stepper holds the reps, and one button logs it. No aiming at rows.</div>
+<div>Under it, the whole session is one row per exercise with warm-up and working sets as cells. Logging walks the queue in order, across exercises, and any cell can be tapped out of order.</div>
+<div>Rest owns the screen and scales to the set you just logged: all reps gets a short green ring, missed reps a long amber one. Warm-ups are computed off today's weight and never count toward volume or progression.</div>
+<div>Reps are per-set cells, green when you hit the target and amber when you didn't, so a bad day is visible at a glance.</div>
+<div>Program items are tagged [BB] [BW] [TIME] [DIST]; 5×5 progression applies only to [BB].</div>
+</div>
+</div>
+<div>
+<div style="font:500 10px/1 'IBM Plex Mono';letter-spacing:.2em;color:#7C8A91">NEXT</div>
+<div style="margin-top:12px;font:400 11.5px/1.7 'IBM Plex Mono';color:#B9C4C8">Desktop layout, add-exercise sheet over the global catalog, and the [DIST]/[TIME] logging screens.</div>
+</div>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  day = [
+    { id: 'squat', name: 'Squat', short: 'SQUAT', sets: 5, reps: 5, weight: 185, best: 180, inc: 5, last: '180 × 5' },
+    { id: 'bench', name: 'Bench Press', short: 'BENCH', sets: 5, reps: 5, weight: 155, best: 160, inc: 5, last: '155 × 5' },
+    { id: 'row', name: 'Barbell Row', short: 'ROW', sets: 5, reps: 5, weight: 135, best: 135, inc: 5, last: '135 × 5' },
+  ];
+
+  freshSets() {
+    return this.day.reduce((acc, e) => {
+      acc[e.id] = Array.from({ length: e.sets }).map(() => ({ reps: e.reps, done: false }));
+      return acc;
+    }, {});
+  }
+
+  state = {
+    screen: 'app', tab: 'today', exIdx: 0, elapsed: 0, rest: 0, feel: null,
+    focus: false, quoteIdx: 0,
+    weights: { squat: 185, bench: 155, row: 135 },
+    sets: this.freshSets(),
+    warm: { squat: [false, false, false], bench: [false, false, false], row: [false, false, false] },
+    warmToggled: {},
+    setTab: {},
+    active: false,
+    range: '3m',
+    units: 'lb',
+    increment: 5,
+    restLenSetting: 90,
+    failLenSetting: 300,
+    barWeight: 45,
+    plates: [
+      { weight: 45, pairs: 4 },
+      { weight: 35, pairs: 2 },
+      { weight: 25, pairs: 2 },
+      { weight: 10, pairs: 4 },
+      { weight: 5, pairs: 2 },
+      { weight: 2.5, pairs: 2 },
+    ],
+    restLen: 90,
+    restReason: 'hit',
+    restSet: null,
+    confirm: null,
+  };
+
+  freshWarm() {
+    return this.day.reduce((acc, e) => { acc[e.id] = [false, false, false]; return acc; }, {});
+  }
+
+  resetSession() {
+    return { exIdx: 0, elapsed: 0, rest: 0, feel: null, sets: this.freshSets(), warm: this.freshWarm(), warmToggled: {}, setTab: {}, active: false, confirm: null };
+  }
+
+  warmPlan(w) {
+    return [
+      { weight: 45, reps: 5 },
+      { weight: Math.max(45, Math.round(w * 0.5 / 5) * 5), reps: 5 },
+      { weight: Math.max(45, Math.round(w * 0.75 / 5) * 5), reps: 3 },
+    ];
+  }
+
+  tapWarm(i) {
+    const id = this.ex().id;
+    this.setState((s) => {
+      const arr = s.warm[id].map((x, k) => (k === i ? !x : x));
+      const allDone = arr.every(Boolean);
+      return {
+        warm: { ...s.warm, [id]: arr },
+        setTab: allDone ? { ...s.setTab, [id]: 'work' } : s.setTab,
+      };
+    });
+  }
+
+  get restTotal() { return this.state.restLenSetting; }
+  get failRestTotal() { return this.state.failLenSetting; }
+  get unit() { return this.state.units; }
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState((s) => (s.screen === 'session'
+        ? { elapsed: s.elapsed + 1, rest: s.rest > 0 ? s.rest - 1 : 0 }
+        : null));
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  // reps render as one cell per set, green when it hit target, amber when it missed
+  cells(list, target) {
+    return list.map((v, i) => {
+      const ok = v >= target;
+      return {
+        key: i, v: v,
+        fg: ok ? '#45BB7C' : '#E8A33D',
+        bg: ok ? 'rgba(69,187,124,.16)' : 'rgba(232,163,61,.18)',
+      };
+    });
+  }
+
+  historyLog() {
+    const raw = [
+      { day: 'Workout B', date: 'MON AUG 10', time: '38 MIN', lines: [
+        { name: 'SQUAT 180', reps: [5, 5, 5, 5, 5], target: 5 },
+        { name: 'OHP 95', reps: [5, 5, 5, 4, 3], target: 5 },
+        { name: 'DEADLIFT 245', reps: [5], target: 5 }] },
+      { day: 'Workout A', date: 'SAT AUG 8', time: '44 MIN', lines: [
+        { name: 'SQUAT 175', reps: [5, 5, 5, 5, 5], target: 5 },
+        { name: 'BENCH 155', reps: [5, 5, 5, 5, 5], target: 5 },
+        { name: 'ROW 135', reps: [5, 5, 5, 5, 5], target: 5 }] },
+      { day: 'Conditioning', date: 'THU AUG 6', time: '22 MIN', lines: [
+        { name: 'ROW 2000 M', text: '8:12' },
+        { name: 'CARRY 60', text: '4 × 40 S' }] },
+      { day: 'Workout B', date: 'WED AUG 5', time: '41 MIN', lines: [
+        { name: 'SQUAT 175', reps: [5, 5, 5, 5, 5], target: 5 },
+        { name: 'OHP 95', reps: [5, 5, 4, 4, 3], target: 5 },
+        { name: 'DEADLIFT 235', reps: [5], target: 5 }] },
+    ];
+    return raw.map((h) => ({
+      ...h,
+      lines: h.lines.map((l) => ({
+        name: l.name,
+        text: l.text || '',
+        isText: !!l.text,
+        hasCells: !l.text,
+        cells: l.text ? [] : this.cells(l.reps, l.target),
+      })),
+    }));
+  }
+
+  // squat working weight over time, plotted into the 320×130 chart box
+  chart(range) {
+    const series = {
+      '3m': { vals: [155, 160, 165, 170, 170, 175, 180, 185], ticks: ['MAY', 'JUN', 'AUG'], deload: 4 },
+      '6m': { vals: [130, 140, 150, 155, 160, 170, 170, 180, 185], ticks: ['FEB', 'MAY', 'AUG'], deload: 6 },
+      '1y': { vals: [95, 115, 135, 145, 160, 155, 170, 185], ticks: ['SEP', 'FEB', 'AUG'], deload: 5 },
+      '2y': { vals: [45, 70, 95, 120, 135, 150, 145, 165, 185], ticks: ['AUG 24', 'JUL 25', 'AUG 26'], deload: 6 },
+      '5y': { vals: [45, 95, 140, 175, 160, 190, 175, 185], ticks: ['2021', '2023', '2026'], deload: 4 },
+    }[range];
+    const vals = series.vals;
+    const lo = Math.min(...vals);
+    const hi = Math.max(...vals);
+    const span = hi - lo || 1;
+    const pts = vals.map((v, i) => ({
+      x: 6 + (i * 308) / (vals.length - 1),
+      y: 110 - ((v - lo) / span) * 96,
+    }));
+    const dots = [];
+    if (series.deload >= 0) {
+      dots.push({ x: pts[series.deload].x.toFixed(1), y: pts[series.deload].y.toFixed(1), r: 3.5, fill: '#0E1113', stroke: '#E8A33D' });
+    }
+    const last = pts[pts.length - 1];
+    dots.push({ x: last.x.toFixed(1), y: last.y.toFixed(1), r: 4, fill: '#45BB7C', stroke: 'none' });
+    return {
+      points: pts.map((p) => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' '),
+      dots: dots,
+      ticks: series.ticks.map((t) => ({ label: t })),
+      gain: '+' + (vals[vals.length - 1] - vals[0]),
+    };
+  }
+
+  bumpPlate(i, d) {
+    this.setState((s) => ({
+      plates: s.plates.map((p, k) => (k === i ? { ...p, pairs: Math.max(0, Math.min(20, p.pairs + d)) } : p)),
+    }));
+  }
+
+  mmss(t) { return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); }
+
+  // mirrors calculatePlates(): greedy by size, bounded by the pairs you actually own
+  plates(weight) {
+    let per = (weight - this.state.barWeight) / 2;
+    if (per <= 0) return 'BAR ONLY';
+    const out = [];
+    const stock = [...this.state.plates].filter((p) => p.pairs > 0).sort((a, b) => b.weight - a.weight);
+    for (const p of stock) {
+      let n = Math.min(Math.floor((per + 0.001) / p.weight), p.pairs);
+      while (n-- > 0) { out.push(p.weight); per = Number((per - p.weight).toFixed(2)); }
+    }
+    if (per > 0.001) return 'NO EXACT PLATE MATCH';
+    return out.join(' / ') + ' PER SIDE';
+  }
+
+  ex() { return this.day[this.state.exIdx]; }
+
+  heads = ['Rack it', 'Bar\u2019s empty', 'Logged', 'That\u2019s the session', 'Chalk off', 'Done lifting'];
+
+  quotes = [
+    'THE BAR DOES NOT CARE HOW YOU FELT WALKING IN.',
+    'NOTHING FANCY. YOU SHOWED UP AND ADDED FIVE POUNDS.',
+    'STRENGTH IS A LONG SERIES OF UNREMARKABLE SESSIONS.',
+    'THE SET YOU DID NOT SKIP IS THE ONE THAT COUNTED.',
+    'SAME LIFTS NEXT TIME, SLIGHTLY HEAVIER.',
+    'PROGRESS IS BORING AND THAT IS WHY IT WORKS.',
+  ];
+
+  plateStack(weight) {
+    const size = { 45: [17, 74], 35: [15, 64], 25: [13, 54], 10: [10, 40], 5: [8, 31], 2.5: [7, 25] };
+    let per = (weight - this.state.barWeight) / 2;
+    const out = [];
+    const labels = [];
+    const stock = [...this.state.plates].filter((p) => p.pairs > 0).sort((a, b) => b.weight - a.weight);
+    for (const p of stock) {
+      let n = Math.min(Math.floor((per + 0.001) / p.weight), p.pairs);
+      while (n-- > 0) {
+        per = Number((per - p.weight).toFixed(2));
+        const [w, h] = size[p.weight] || [8, 30];
+        out.push({ w: w + 'px', h: h + 'px', bg: p.weight >= 25 ? '#20272B' : '#171D20', border: p.weight >= 25 ? '#3D4649' : '#2B3235' });
+        labels.push(p.weight);
+      }
+    }
+    const short = per > 0.001;
+    return {
+      plates: out,
+      short: short,
+      line: out.length
+        ? 'PER SIDE · ' + labels.join(' + ') + (short ? ' · ' + per + ' SHORT' : '')
+        : (short ? 'NO EXACT PLATE MATCH' : 'BAR ONLY · ' + this.state.barWeight),
+    };
+  }
+
+  focusQueue() {
+    const s = this.state;
+    const q = [];
+    this.day.forEach((e, gi) => {
+      this.warmPlan(s.weights[e.id]).forEach((v, i) => {
+        if (!s.warm[e.id][i]) q.push({ kind: 'warm', gi: gi, id: e.id, name: e.name, i: i, weight: v.weight, reps: v.reps, target: v.reps, label: 'WARM ' + (i + 1) + ' OF 3' });
+      });
+      s.sets[e.id].forEach((x, i) => {
+        if (!x.done) q.push({ kind: 'work', gi: gi, id: e.id, name: e.name, i: i, weight: s.weights[e.id], reps: x.reps, target: e.reps, label: 'SET ' + (i + 1) + ' OF ' + s.sets[e.id].length });
+      });
+    });
+    return q;
+  }
+
+  focusWarmTap(id, i) {
+    this.setState((s) => ({ warm: { ...s.warm, [id]: s.warm[id].map((x, k) => (k === i ? !x : x)) } }));
+  }
+
+  focusLogWork(id, i) {
+    this.setState((s) => {
+      const arr = s.sets[id].map((x, k) => (k === i ? { ...x, done: true } : x));
+      const target = this.day.find((e) => e.id === id).reps;
+      const hit = arr[i].reps >= target;
+      const len = hit ? this.restTotal : this.failRestTotal;
+      return { sets: { ...s.sets, [id]: arr }, confirm: null, rest: len, restLen: len, restReason: hit ? 'hit' : 'miss', restSet: id + ':' + i };
+    });
+  }
+
+  focusBump(id, i, d) {
+    this.setState((s) => ({ sets: { ...s.sets, [id]: s.sets[id].map((x, k) => (k === i ? { ...x, reps: Math.max(0, x.reps + d) } : x)) } }));
+  }
+
+  tapSet(i) {
+    const id = this.ex().id;
+    this.setState((s) => {
+      // logged sets untap; pending sets open the rep confirm step instead of starting rest blind
+      if (s.sets[id][i].done) {
+        const arr = s.sets[id].map((x, k) => (k === i ? { ...x, done: false } : x));
+        return { sets: { ...s.sets, [id]: arr }, confirm: null };
+      }
+      return { confirm: id + ':' + i };
+    });
+  }
+
+  confirmSet(i) {
+    const id = this.ex().id;
+    this.setState((s) => {
+      const arr = s.sets[id].map((x, k) => (k === i ? { ...x, done: true } : x));
+      // rest scales to the set you just logged: full reps = short rest, missed reps = long rest
+      const hit = arr[i].reps >= this.ex().reps;
+      const len = hit ? this.restTotal : this.failRestTotal;
+      return {
+        sets: { ...s.sets, [id]: arr }, confirm: null,
+        rest: len, restLen: len, restReason: hit ? 'hit' : 'miss', restSet: id + ':' + i,
+      };
+    });
+  }
+
+  bumpSet(i, delta) {
+    const id = this.ex().id;
+    this.setState((s) => {
+      const arr = s.sets[id].map((x, k) => (k === i ? { ...x, reps: Math.max(0, x.reps + delta) } : x));
+      const next = { sets: { ...s.sets, [id]: arr } };
+      // editing the set that started the current rest re-picks the rest length
+      if (s.rest > 0 && s.restSet === id + ':' + i) {
+        const hit = arr[i].reps >= this.ex().reps;
+        const len = hit ? this.restTotal : this.failRestTotal;
+        const spent = Math.max(0, s.restLen - s.rest);
+        next.restLen = len;
+        next.rest = Math.max(1, len - spent);
+        next.restReason = hit ? 'hit' : 'miss';
+      }
+      return next;
+    });
+  }
+
+  bumpWeight(dir) {
+    const id = this.ex().id;
+    this.setState((s) => ({
+      weights: { ...s.weights, [id]: Math.max(s.barWeight, s.weights[id] + dir * s.increment) },
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const ex = this.ex();
+    const unitUp = this.unit.toUpperCase();
+    const sets = s.sets[ex.id];
+    const w = s.weights[ex.id];
+    const doneCount = sets.filter((x) => x.done).length;
+    const allDone = doneCount === sets.length;
+    const isLast = s.exIdx === this.day.length - 1;
+    const nextPending = sets.findIndex((x) => !x.done);
+
+    const tabFg = (t) => (s.tab === t ? '#EDEDE7' : '#7C8A91');
+    const tabLine = (t) => (s.tab === t ? '#45BB7C' : 'transparent');
+
+    const feel = (k, bg, fg, border) => (s.feel === k
+      ? { bg: bg, fg: fg, border: border }
+      : { bg: 'transparent', fg: '#B9C4C8', border: '#23292D' });
+    const g = feel('good', '#45BB7C', '#0E1113', '#45BB7C');
+    const o = feel('ok', '#E8A33D', '#241A02', '#E8A33D');
+    const b = feel('bad', '#161B1E', '#EDEDE7', '#7C8A91');
+
+    let volume = 0;
+    let setsLogged = 0;
+    for (const e of this.day) {
+      for (const x of s.sets[e.id]) {
+        if (x.done) { volume += s.weights[e.id] * x.reps; setsLogged += 1; }
+      }
+    }
+
+    const nextTime = this.day.map((e) => {
+      const arr = s.sets[e.id];
+      const hit = arr.every((x) => x.done && x.reps >= e.reps);
+      const weight = s.weights[e.id];
+      return {
+        name: e.name, from: weight, to: hit ? weight + e.inc : weight,
+        note: hit ? '+' + e.inc : 'HOLD',
+        color: hit ? '#45BB7C' : '#E8A33D',
+      };
+    });
+
+    const prs = this.day.filter((e) => s.weights[e.id] > e.best
+      && s.sets[e.id].every((x) => x.done && x.reps >= e.reps));
+
+    const chart = this.chart(s.range);
+    const warmDone = s.warm[ex.id].filter(Boolean).length;
+    // tab defaults to warm-up until this exercise's ramp sets are checked off
+    const tab = s.setTab[ex.id] || (warmDone < 3 ? 'warm' : 'work');
+    const warmOpen = tab === 'warm';
+
+    const fq = this.focusQueue();
+    const fcur = fq[0] || null;
+    const fTotal = this.day.reduce((a, e) => a + 3 + s.sets[e.id].length, 0);
+    const fStack = this.plateStack(fcur ? fcur.weight : s.barWeight);
+    const green = '#45BB7C'; const amber = '#E8A33D'; const dimc = '#7C8A91';
+
+    return {
+      focusOn: s.screen === 'session',
+      enterFocus: () => this.setState({ quoteIdx: Math.floor(Math.random() * this.heads.length) }),
+      exitFocus: () => this.setState({ screen: 'app', tab: 'today' }),
+      fRest: s.rest > 0,
+      fLive: s.rest === 0 && !!fcur,
+      fDone: s.rest === 0 && !fcur,
+      fKind: fcur ? (fcur.kind === 'warm' ? 'WARM-UP' : 'WORKING') : 'DONE',
+      fKindFg: fcur && fcur.kind === 'warm' ? amber : green,
+      fExName: fcur ? fcur.name : 'WORKOUT A',
+      fSetLabel: fcur ? fcur.label : 'ALL SETS LOGGED',
+      fWeight: fcur ? fcur.weight : s.barWeight,
+      fWeightFg: fcur && fcur.kind === 'warm' ? '#B9C4C8' : '#EDEDE7',
+      fPlateViz: fStack.plates,
+      fPlateLine: fStack.line,
+      fPlateFg: fStack.short ? amber : dimc,
+      fReps: fcur ? fcur.reps : 0,
+      fRepsNote: fcur ? (fcur.kind === 'warm' ? 'REPS · WARM-UP, NOT COUNTED' : 'REPS · TARGET ' + fcur.target) : '',
+      fBtnLabel: fcur ? (fcur.kind === 'warm' ? 'WARM-UP SET DONE' : 'LOG SET ' + (fcur.i + 1)) : 'FINISH',
+      fBtnBg: fcur && fcur.kind === 'warm' ? 'transparent' : green,
+      fBtnBorder: fcur && fcur.kind === 'warm' ? amber : green,
+      fBtnFg: fcur && fcur.kind === 'warm' ? amber : '#0E1113',
+      fPlus: () => { if (fcur && fcur.kind === 'work') this.focusBump(fcur.id, fcur.i, 1); },
+      fMinus: () => { if (fcur && fcur.kind === 'work') this.focusBump(fcur.id, fcur.i, -1); },
+      fLog: () => {
+        if (!fcur) { this.setState({ focus: false, screen: 'summary', rest: 0 }); return; }
+        this.setState({ exIdx: fcur.gi });
+        if (fcur.kind === 'warm') this.focusWarmTap(fcur.id, fcur.i);
+        else this.focusLogWork(fcur.id, fcur.i);
+      },
+      fQueueCount: (fTotal - fq.length) + '/' + fTotal,
+      fGroups: this.day.map((e, gi) => {
+        const w = s.warm[e.id];
+        const plan = this.warmPlan(s.weights[e.id]);
+        const rows = s.sets[e.id];
+        const doneN = w.filter(Boolean).length + rows.filter((x) => x.done).length;
+        const isCurEx = fcur && fcur.gi === gi;
+        return {
+          name: e.name,
+          meta: s.weights[e.id] + ' ' + unitUp + ' · ' + doneN + '/' + (w.length + rows.length),
+          fg: isCurEx ? '#EDEDE7' : '#B9C4C8',
+          bg: isCurEx ? '#141A1D' : 'transparent',
+          bar: isCurEx ? green : 'transparent',
+          onTap: () => this.setState({ exIdx: gi }),
+          warmCells: plan.map((v, i) => {
+            const done = w[i];
+            const isCur = fcur && fcur.kind === 'warm' && fcur.gi === gi && fcur.i === i;
+            return {
+              label: v.weight,
+              bg: done ? 'rgba(232,163,61,.14)' : (isCur ? '#161B1E' : 'transparent'),
+              border: isCur ? amber : (done ? 'rgba(232,163,61,.4)' : '#23292D'),
+              fg: done ? amber : (isCur ? '#EDEDE7' : '#5C686D'),
+              onTap: () => this.focusWarmTap(e.id, i),
+            };
+          }),
+          workCells: rows.map((x, i) => {
+            const isCur = fcur && fcur.kind === 'work' && fcur.gi === gi && fcur.i === i;
+            const hit = x.reps >= e.reps;
+            return {
+              label: x.done ? x.reps : (i + 1),
+              bg: x.done ? (hit ? 'rgba(69,187,124,.16)' : 'rgba(232,163,61,.18)') : (isCur ? '#161B1E' : 'transparent'),
+              border: isCur ? green : (x.done ? 'transparent' : '#23292D'),
+              fg: x.done ? (hit ? green : amber) : (isCur ? '#EDEDE7' : '#5C686D'),
+              onTap: () => { if (!x.done) this.focusLogWork(e.id, i); },
+            };
+          }),
+        };
+      }),
+      fHead: this.heads[s.quoteIdx % this.heads.length],
+      fQuote: this.quotes[s.quoteIdx % this.quotes.length],
+      fSets: this.day.reduce((a, e) => a + s.sets[e.id].filter((x) => x.done).length, 0),
+      fVolume: this.day.reduce((a, e) => a + s.sets[e.id].reduce((b, x) => b + (x.done ? s.weights[e.id] * x.reps : 0), 0), 0).toLocaleString(),
+      fMinutes: Math.max(1, Math.round(s.elapsed / 60)),
+      fFinish: () => this.setState({ focus: false, screen: 'summary', rest: 0 }),
+
+      unitsUp: unitUp,
+      inApp: s.screen === 'app',
+      inSession: s.screen === 'session',
+      inSummary: s.screen === 'summary',
+      isToday: s.screen === 'app' && s.tab === 'today',
+      isHistory: s.screen === 'app' && s.tab === 'history',
+      isProgress: s.screen === 'app' && s.tab === 'progress',
+      isProgram: s.screen === 'app' && s.tab === 'program',
+      isSettings: s.screen === 'app' && s.tab === 'settings',
+      cSettings: tabFg('settings'), uSettings: tabLine('settings'),
+      goSettings: () => this.setState({ screen: 'app', tab: 'settings' }),
+      unitOpts: ['lb', 'kg'].map((u) => ({
+        label: u.toUpperCase(),
+        border: s.units === u ? '#45BB7C' : '#23292D',
+        bg: s.units === u ? 'rgba(69,187,124,.12)' : 'transparent',
+        fg: s.units === u ? '#45BB7C' : '#7C8A91',
+        onTap: () => this.setState({ units: u }),
+      })),
+      incOpts: [2.5, 5, 10].map((n) => ({
+        label: String(n),
+        border: s.increment === n ? '#45BB7C' : '#23292D',
+        bg: s.increment === n ? 'rgba(69,187,124,.12)' : 'transparent',
+        fg: s.increment === n ? '#45BB7C' : '#7C8A91',
+        onTap: () => this.setState({ increment: n }),
+      })),
+      restMinLabel: this.mmss(s.restLenSetting),
+      failMinLabel: this.mmss(s.failLenSetting),
+      restMinus: () => this.setState((p) => ({ restLenSetting: Math.max(30, p.restLenSetting - 15) })),
+      restPlus: () => this.setState((p) => ({ restLenSetting: Math.min(600, p.restLenSetting + 15) })),
+      failMinus: () => this.setState((p) => ({ failLenSetting: Math.max(60, p.failLenSetting - 15) })),
+      failPlus: () => this.setState((p) => ({ failLenSetting: Math.min(900, p.failLenSetting + 15) })),
+      barWeight: s.barWeight,
+      barMinus: () => this.setState((p) => ({ barWeight: Math.max(15, p.barWeight - 5) })),
+      barPlus: () => this.setState((p) => ({ barWeight: Math.min(65, p.barWeight + 5) })),
+      plateRows: s.plates.map((p, i) => ({
+        weight: p.weight,
+        pairs: p.pairs === 0 ? 'NONE' : p.pairs,
+        unit: unitUp,
+        fg: p.pairs === 0 ? '#7C8A91' : '#EDEDE7',
+        onMinus: () => this.bumpPlate(i, -1),
+        onPlus: () => this.bumpPlate(i, 1),
+      })),
+      cToday: tabFg('today'), cHistory: tabFg('history'), cProgress: tabFg('progress'), cProgram: tabFg('program'),
+      uToday: tabLine('today'), uHistory: tabLine('history'), uProgress: tabLine('progress'), uProgram: tabLine('program'),
+      goToday: () => this.setState({ screen: 'app', tab: 'today' }),
+      goHistory: () => this.setState({ screen: 'app', tab: 'history' }),
+      goProgress: () => this.setState({ screen: 'app', tab: 'progress' }),
+      ranges: [
+        { key: '3m', label: '3M' },
+        { key: '6m', label: '6M' },
+        { key: '1y', label: '1Y' },
+        { key: '2y', label: '2Y' },
+        { key: '5y', label: '5Y' },
+      ].map((r) => ({
+        label: r.label,
+        border: s.range === r.key ? '#45BB7C' : '#23292D',
+        bg: s.range === r.key ? 'rgba(69,187,124,.12)' : 'transparent',
+        fg: s.range === r.key ? '#45BB7C' : '#7C8A91',
+        onTap: () => this.setState({ range: r.key }),
+      })),
+      chartPoints: chart.points,
+      chartDots: chart.dots,
+      chartTicks: chart.ticks,
+      rangeGain: chart.gain,
+      rangeLabel: { '3m': 'LAST 3 MONTHS', '6m': 'LAST 6 MONTHS', '1y': 'LAST YEAR', '2y': 'LAST 2 YEARS', '5y': 'LAST 5 YEARS' }[s.range],
+      goProgram: () => this.setState({ screen: 'app', tab: 'program' }),
+
+      upNext: this.day.map((e, i) => ({
+        idx: '0' + (i + 1), name: e.name,
+        scheme: e.sets + '×' + e.reps,
+        last: e.last,
+        weight: s.weights[e.id],
+        delta: '+' + e.inc,
+      })),
+
+      history: this.historyLog(),
+
+      startSession: () => this.setState((p) => (p.active
+        ? { screen: 'session' }
+        : { screen: 'session', ...this.resetSession(), active: true })),
+      startLabel: s.active ? 'RESUME WORKOUT' : 'START WORKOUT',
+      startNote: s.active ? 'IN PROGRESS · ' + this.mmss(s.elapsed) : '',
+      leaveSession: () => this.setState({ screen: 'app', tab: 'today' }),
+      inSessionNav: s.screen === 'session',
+      finish: () => this.setState({ screen: 'summary', rest: 0, confirm: null }),
+      clock: this.mmss(s.elapsed),
+
+      pager: this.day.map((e, i) => {
+        const arr = s.sets[e.id];
+        const done = arr.filter((x) => x.done).length;
+        const active = i === s.exIdx;
+        return {
+          short: e.short,
+          count: done + '/' + arr.length,
+          underline: active ? '#45BB7C' : 'transparent',
+          bg: active ? '#161B1E' : 'transparent',
+          fg: active ? '#EDEDE7' : '#7C8A91',
+          dim: active ? '#45BB7C' : '#3D4649',
+          onTap: () => this.setState({ exIdx: i }),
+        };
+      }),
+
+      exName: ex.name + ' · ' + ex.sets + '×' + ex.reps,
+      exWeight: w,
+      plateLine: this.plates(w),
+      warmSets: this.warmPlan(w).map((v, i) => {
+        const done = s.warm[ex.id][i];
+        return {
+          no: 'WARM ' + (i + 1),
+          weight: v.weight,
+          reps: v.reps,
+          plates: this.plates(v.weight),
+          mark: done ? '✓' : '',
+          bg: done ? 'rgba(69,187,124,.06)' : 'transparent',
+          fg: done ? '#45BB7C' : '#B9C4C8',
+          dim: done ? 'rgba(69,187,124,.7)' : '#7C8A91',
+          onTap: () => this.tapWarm(i),
+        };
+      }),
+      warmOpen: warmOpen,
+      workOpen: !warmOpen,
+      warmCount: warmDone + '/3',
+      warmCountColor: warmDone === 3 ? '#45BB7C' : (warmOpen ? '#B9C4C8' : '#7C8A91'),
+      warmTabFg: warmOpen ? '#EDEDE7' : '#7C8A91',
+      warmTabLine: warmOpen ? '#45BB7C' : 'transparent',
+      workTabFg: warmOpen ? '#7C8A91' : '#EDEDE7',
+      workTabLine: warmOpen ? 'transparent' : '#45BB7C',
+      workCountColor: allDone ? '#45BB7C' : (warmOpen ? '#7C8A91' : '#B9C4C8'),
+      warmHint: warmDone === 3
+        ? 'RAMP DONE · SWITCH TO WORKING SETS'
+        : 'RAMP TO ' + w + ' ' + unitUp + ' · TAP EACH AS YOU FINISH IT · NOT COUNTED IN VOLUME',
+      showWarm: () => this.setState((p) => ({ setTab: { ...p.setTab, [ex.id]: 'warm' } })),
+      showWork: () => this.setState((p) => ({ setTab: { ...p.setTab, [ex.id]: 'work' } })),
+      workCount: doneCount + '/' + sets.length,
+      minusWeight: () => this.bumpWeight(-1),
+      plusWeight: () => this.bumpWeight(1),
+      incLabel: '+' + s.increment,
+      decLabel: '−' + s.increment,
+
+      sets: sets.map((x, i) => {
+        const hit = x.reps >= ex.reps;
+        const accent = x.done ? (hit ? '#45BB7C' : '#E8A33D') : '#EDEDE7';
+        return {
+          no: 'SET ' + (i + 1),
+          reps: x.reps,
+          label: x.done
+            ? (hit ? 'LOGGED' : 'MISSED · TARGET ' + ex.reps)
+            : (i === nextPending ? 'TAP WHEN YOU RACK THE BAR' : 'TARGET ' + ex.reps),
+          bg: x.done ? (hit ? 'rgba(69,187,124,.09)' : 'rgba(232,163,61,.10)') : (i === nextPending ? '#161B1E' : 'transparent'),
+          fg: accent,
+          dim: x.done ? accent : (i === nextPending ? '#B9C4C8' : '#7C8A91'),
+          showAdjust: x.done,
+          adjustBorder: x.done ? (hit ? 'rgba(69,187,124,.4)' : 'rgba(232,163,61,.45)') : '#23292D',
+          confirming: s.confirm === ex.id + ':' + i,
+          idle: s.confirm !== ex.id + ':' + i,
+          confirmColor: hit ? '#45BB7C' : '#E8A33D',
+          confirmRest: 'REST ' + this.mmss(hit ? this.restTotal : this.failRestTotal),
+          onTap: () => this.tapSet(i),
+          onConfirm: () => this.confirmSet(i),
+          onCancel: () => this.setState({ confirm: null }),
+          onMinus: () => this.bumpSet(i, -1),
+          onPlus: () => this.bumpSet(i, 1),
+        };
+      }),
+      hint: doneCount
+        ? doneCount + ' OF ' + sets.length + ' LOGGED · USE −/+ ON A ROW IF YOU MISSED REPS'
+        : 'ROWS ARE PRE-FILLED WITH YOUR TARGET · TAP ONE AS YOU RACK THE BAR',
+
+      resting: s.rest > 0 && s.screen === 'session' && !s.focus,
+      restLabel: this.mmss(s.rest),
+      restPct: Math.round((s.rest / s.restLen) * 100) + '%',
+      restDash: (791.68 * (1 - s.rest / s.restLen)).toFixed(1),
+      restRing: s.restReason === 'miss' ? '#E8A33D' : '#45BB7C',
+      restTitle: s.restReason === 'miss' ? 'LONG REST' : 'REST',
+      restWhy: s.restReason === 'miss'
+        ? 'MISSED REPS · ' + this.mmss(s.restLen) + ' TO RECOVER'
+        : 'ALL REPS · ' + this.mmss(s.restLen),
+      restNext: nextPending >= 0
+        ? 'NEXT · SET ' + (nextPending + 1) + ' · ' + w + ' ' + unitUp + ' × ' + ex.reps
+        : (isLast ? 'LAST SET DONE · FINISH WHEN READY' : 'NEXT · ' + this.day[s.exIdx + 1].short),
+      addRest: () => this.setState((p) => ({ rest: p.rest + 30, restLen: Math.max(p.restLen, p.rest + 30) })),
+      skipRest: () => this.setState({ rest: 0 }),
+
+      advanceLabel: isLast
+        ? 'FINISH WORKOUT'
+        : (allDone ? 'NEXT · ' + this.day[s.exIdx + 1].short : 'SKIP TO ' + this.day[s.exIdx + 1].short),
+      advanceBg: allDone ? '#45BB7C' : 'transparent',
+      advanceFg: allDone ? '#0E1113' : '#7C8A91',
+      advanceBorder: allDone ? '#45BB7C' : '#23292D',
+      advance: () => (isLast
+        ? this.setState({ screen: 'summary', rest: 0 })
+        : this.setState({ exIdx: s.exIdx + 1, rest: 0 })),
+
+      volume: volume.toLocaleString(),
+      setsLogged: setsLogged,
+      hasPr: prs.length > 0,
+      prLine: prs.map((e) => e.name + ' ' + s.weights[e.id] + ' × ' + e.reps).join(' · '),
+      nextTime: nextTime,
+      goodBg: g.bg, goodFg: g.fg, goodBorder: g.border,
+      okBg: o.bg, okFg: o.fg, okBorder: o.border,
+      badBg: b.bg, badFg: b.fg, badBorder: b.border,
+      feelGood: () => this.setState({ feel: 'good' }),
+      feelOk: () => this.setState({ feel: 'ok' }),
+      feelBad: () => this.setState({ feel: 'bad' }),
+      saveWorkout: () => this.setState({ screen: 'app', tab: 'history', ...this.resetSession() }),
+      clockTick: s.elapsed,
+    };
+  }
+}
+</script>
+</body>
+</html>

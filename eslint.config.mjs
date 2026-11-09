@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design reference material, not application source.
+    "design_handoff_git_swole/**",
   ]),
 ]);
 
