@@ -92,7 +92,10 @@ export function getNextDayId(
   previousDayIds: string[] = [],
 ): string {
   const ids = new Set(groups.map((group) => group.id));
-  const isDefaultProgram = ids.has("workout-a") && ids.has("workout-b") && ids.has("workout-c");
+  // Exactly the three default days. Once a day is added or removed the program is
+  // the user's own, and A → B → A → C would skip whatever they added.
+  const isDefaultProgram =
+    groups.length === 3 && ids.has("workout-a") && ids.has("workout-b") && ids.has("workout-c");
 
   // Custom programs fall back to a plain cycle through whatever days exist.
   if (!isDefaultProgram) {
@@ -106,6 +109,21 @@ export function getNextDayId(
 
   const lastAlternate = previousDayIds.find((id) => id === "workout-b" || id === "workout-c");
   return lastAlternate === "workout-b" ? "workout-c" : "workout-b";
+}
+
+/**
+ * Id for a new day: `workout-<letter>`, using the first letter not taken by an
+ * existing day *or by any logged workout*. History keys on this id, so reusing a
+ * deleted day's id would hand its old sessions to the new day. The letter is what
+ * the badges show (see `workoutLetter`).
+ */
+export function newDayId(groups: WorkoutTemplate[], loggedDayIds: string[]): string {
+  const taken = new Set([...groups.map((group) => group.id), ...loggedDayIds]);
+  for (const letter of "abcdefghijklmnopqrstuvwxyz") {
+    const id = `workout-${letter}`;
+    if (!taken.has(id)) return id;
+  }
+  return `workout-${Date.now().toString(36)}`;
 }
 
 export const STARTING_WEIGHTS: Record<ExerciseKey, number> = {

@@ -140,12 +140,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </header>
         ) : null}
 
-        <main className={inSession ? "" : "pb-[76px] desk:pb-0"}>{children}</main>
+        <main className={inSession ? "pb-[env(safe-area-inset-bottom)]" : "pb-[calc(76px+env(safe-area-inset-bottom))] desk:pb-0"}>{children}</main>
       </div>
 
       {/* Mobile tab bar */}
       {!inSession ? (
-        <nav className="fixed bottom-0 left-0 right-0 z-20 flex border-t border-line bg-raised desk:hidden">
+        <nav className="fixed bottom-0 left-0 right-0 z-20 flex border-t border-line bg-raised pb-[env(safe-area-inset-bottom)] desk:hidden">
           {MOBILE_TABS.map((item) => {
             const active = pathname === item.href;
             return (

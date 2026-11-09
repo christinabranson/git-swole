@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useWorkoutApp } from "@/context/workout-app-context";
-import { EXERCISE_KEY_BY_NAME, MODE_LABELS } from "@/lib/program";
+import { EXERCISE_KEY_BY_NAME, MODE_LABELS, newDayId } from "@/lib/program";
 import { ExerciseMode, ProgramExercise, WorkoutTemplate } from "@/lib/types";
 import { workoutLetter } from "@/lib/week";
 
@@ -26,21 +26,54 @@ const MODE_COLOUR: Record<ExerciseMode, string> = {
 };
 
 export default function ProgramScreen() {
-  const { settings, updateSettings, stateLoaded, exerciseCatalog } = useWorkoutApp();
+  const { settings, updateSettings, stateLoaded, exerciseCatalog, workoutLogs } = useWorkoutApp();
   const [dayId, setDayId] = useState<string | null>(null);
+  const [confirmingDelete, setConfirmingDelete] = useState<string | null>(null);
 
   if (!stateLoaded) {
     return <div className="label px-[22px] py-10 text-[10px] text-dim desk:px-[26px]">Loading</div>;
   }
 
   const groups = settings.workoutGroups;
-  const activeId = dayId ?? groups[0]?.id;
+  const activeId = groups.some((group) => group.id === dayId) ? dayId : groups[0]?.id;
   const active = groups.find((group) => group.id === activeId);
 
   const writeDay = (next: WorkoutTemplate) => {
     updateSettings({
       workoutGroups: groups.map((group) => (group.id === next.id ? next : group)),
     });
+  };
+
+  const renameDay = (group: WorkoutTemplate, value: string) => {
+    const name = value.trim() || `Workout ${workoutLetter(group)}`;
+    if (name !== group.name) writeDay({ ...group, name });
+  };
+
+  /*
+   * A new day starts with one row: days with no exercises are dropped when state
+   * is read back (see migrateLegacyWorkoutGroups), so an empty day would vanish on
+   * the next reload.
+   */
+  const addDay = () => {
+    const id = newDayId(groups, workoutLogs.map((log) => log.workoutType));
+    const day: WorkoutTemplate = {
+      id,
+      name: `Workout ${workoutLetter(undefined, id)}`,
+      exercises: [{ exerciseId: "new-exercise", sets: 3, reps: 8, inc: 5, mode: "BB" }],
+    };
+    updateSettings({ workoutGroups: [...groups, day] });
+    setDayId(id);
+    setConfirmingDelete(null);
+  };
+
+  /** Logged sessions for a deleted day stay in history; they keep their letter. */
+  const deleteDay = (id: string) => {
+    const index = groups.findIndex((group) => group.id === id);
+    const remaining = groups.filter((group) => group.id !== id);
+    if (remaining.length === 0) return;
+    updateSettings({ workoutGroups: remaining });
+    setDayId(remaining[Math.max(0, index - 1)]?.id ?? null);
+    setConfirmingDelete(null);
   };
 
   const patchRow = (index: number, patch: Partial<ProgramExercise>) => {
@@ -66,7 +99,10 @@ export default function ProgramScreen() {
           return (
             <button
               key={group.id}
-              onClick={() => setDayId(group.id)}
+              onClick={() => {
+                setDayId(group.id);
+                setConfirmingDelete(null);
+              }}
               className={`min-w-[170px] shrink-0 border-b-2 px-4 py-3 text-left ${
                 isActive ? "border-green bg-subtle" : "border-transparent hover:bg-hover"
               }`}
@@ -79,10 +115,63 @@ export default function ProgramScreen() {
             </button>
           );
         })}
+        <button
+          onClick={addDay}
+          className="label min-w-[130px] shrink-0 border-b-2 border-transparent px-4 py-3 text-left text-[9px] text-dim hover:bg-hover hover:text-green"
+        >
+          + Add day
+        </button>
       </div>
 
       {active ? (
         <>
+          {/* Day name + delete */}
+          <div className="mb-6 flex flex-col gap-4 desk:flex-row desk:items-end desk:justify-between">
+            <div className="min-w-0 flex-1">
+              <label htmlFor="day-name" className="label block text-[9px] text-dim">
+                Day name
+              </label>
+              <input
+                id="day-name"
+                key={active.id}
+                defaultValue={active.name}
+                maxLength={40}
+                onBlur={(event) => renameDay(active, event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                className="label mt-2 w-full max-w-[420px] border-b border-line bg-transparent px-0 py-2 text-[13px] text-ink focus:border-green"
+              />
+            </div>
+
+            {groups.length > 1 ? (
+              confirmingDelete === active.id ? (
+                <div className="flex items-center gap-2">
+                  <span className="label mr-2 text-[8.5px] font-normal text-dim">History is kept</span>
+                  <button
+                    onClick={() => setConfirmingDelete(null)}
+                    className="label border border-line px-4 py-3 text-[9px] text-ink-2 hover:bg-hover"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => deleteDay(active.id)}
+                    className="label border border-amber-line px-4 py-3 text-[9px] text-amber hover:bg-hover"
+                  >
+                    Delete {active.name}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmingDelete(active.id)}
+                  className="label self-start border border-line px-4 py-3 text-[9px] text-dim hover:border-amber-line hover:text-amber desk:self-auto"
+                >
+                  Delete day
+                </button>
+              )
+            ) : null}
+          </div>
+
           <div className="label hidden grid-cols-[32px_1fr_70px_70px_70px_80px_40px] items-center gap-3 border-b border-line py-3 text-[9px] text-dim desk:grid">
             <span>#</span>
             <span>Exercise</span>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/providers";
@@ -22,10 +22,25 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Git Swole",
   description: "Linear-progression barbell tracker",
+  applicationName: "Git Swole",
   icons: {
     icon: "/gitswole.png",
-    apple: "/gitswole.png",
+    apple: "/icons/apple-touch-icon.png",
   },
+  // iOS ignores the manifest's display mode; this is what makes "Add to Home
+  // Screen" open standalone. "black" keeps content below the status bar.
+  appleWebApp: {
+    capable: true,
+    title: "Git Swole",
+    statusBarStyle: "black",
+  },
+};
+
+// `cover` lets the page reach under the iPhone home indicator; the mobile tab bar
+// pads itself by env(safe-area-inset-bottom) so its labels stay clear of it.
+export const viewport: Viewport = {
+  themeColor: "#0b0e10",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

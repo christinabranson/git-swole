@@ -66,11 +66,12 @@ The Supabase client is called directly from the browser and is authorized by RLS
 - `src/proxy.ts` — Clerk middleware. Next.js 16 renamed `middleware.ts` to
   `proxy.ts`; do not recreate a `middleware.ts`.
 
-> **`/program` is on hold.** It is excluded from the UI overhaul by request. It
-> currently edits a fixed A/B/C template, but the intended direction is that any
-> user can build a **completely custom** workout plan, which will likely reshape
-> `WorkoutTemplate` / `ProgramExercise`. Do not restyle it as part of overhaul
-> work, and avoid hardening code around the current program shape.
+> **`/program` is only partly rebuilt.** Days can be added, renamed and deleted
+> (new days get the next unused `workout-<letter>` id via `newDayId`, never one
+> that appears in history). The exercise rows are still the pre-overhaul editor
+> and were not restyled. The intended direction is fully custom plans, which will
+> likely reshape `WorkoutTemplate` / `ProgramExercise`, so avoid hardening code
+> around the current program shape.
 
 
 ### Dev auth
@@ -187,6 +188,12 @@ check constraint).
 - Progression only applies to the five built-in `ExerciseKey`s — logs for custom
   catalog exercises carry no `exerciseKey` and are skipped by
   `applyWorkoutProgression` and by PR computation.
+- **A day with no exercises is dropped on load** (`migrateLegacyWorkoutGroups`
+  filters them), which is why `+ Add day` seeds one row.
+- The app is installable (`src/app/manifest.ts`, `appleWebApp` in `layout.tsx`,
+  icons in `public/icons/`). `viewportFit: "cover"` means the mobile tab bar and
+  `main` pad by `env(safe-area-inset-bottom)`; keep that on anything new pinned to
+  the bottom edge.
 - `schema.sql` is a single re-runnable file, not a numbered migration series.
   Add changes as `if not exists` / guarded `do $$` blocks in the same style.
 - **Everything in `globals.css` must stay inside a layer.** Unlayered CSS beats
@@ -202,6 +209,9 @@ check constraint).
   sync will persist that field.
 - The warm-up ramp is three sets (bar / 50% / 75%), not the old four-set 20-80%
   version. It is specified in the handoff; do not "improve" the percentages.
+- **The A → B → A → C rotation only applies to the untouched default program**
+  (exactly `workout-a`/`-b`/`-c`). Add or delete a day and `getNextDayId` falls
+  back to a plain cycle in list order.
 - **The A → B → A → C rotation is not a cycle through the day list.** Every other
   day is A and the non-A days alternate, so the next day is not a function of the
   current day alone — `getNextDayId` takes the day history (most recent first) to

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useWorkoutApp } from "@/context/workout-app-context";
 import { useToday } from "@/lib/use-now";
-import { buildWeekStrip, workoutLetter } from "@/lib/week";
+import { buildWeekStrip } from "@/lib/week";
 import { WARMUP_SET_COUNT } from "@/lib/warmup";
 
 function formatWeight(weight: number) {
@@ -74,10 +74,6 @@ export default function TodayScreen() {
 
   const sessionCount = workoutLogs.length;
   const weekStreak = week.days.filter((day) => day.completed).length;
-  const letter = workoutLetter(
-    settings.workoutGroups.find((group) => group.id === nextWorkoutType),
-    nextWorkoutType,
-  );
 
   return (
     <div className="px-[22px] py-5 desk:px-[26px]">
@@ -215,7 +211,7 @@ export default function TodayScreen() {
           href="/workout"
           className="label flex h-[58px] items-center justify-between bg-green px-6 text-[13px] text-bg desk:h-[52px] desk:w-auto desk:gap-10"
         >
-          <span>Start workout {letter}</span>
+          <span>Start {nextWorkoutName}</span>
           <span>→</span>
         </Link>
         <Link
